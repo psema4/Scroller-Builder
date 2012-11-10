@@ -1,0 +1,36 @@
+body {
+	overflow: hidden;
+}
+
+#nav {
+	font-family: sans-serif;
+	background: #404040;
+	color: #f5f5f5;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 7px 3px;
+}
+
+#nav .logo {
+	font-size: 1.7em;
+}
+
+#nav .login {
+	float: right;
+	margin-right: 10px;
+}
+
+.btn {
+	background: #505050;
+	border-radius: 5px;
+	padding: 5px;
+	font-size: 1em;
+	display:block;
+	cursor: pointer;
+}
+
+.btn:hover {
+	background: #606060;
+}
