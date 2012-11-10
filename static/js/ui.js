@@ -68,7 +68,7 @@
 
  	$('next_lvl_btn').onclick = function () {
  		game.nextLevel();
- 		game.update();
+ 		if (!game.checkTicking()) game.update();
  	}
 
  	function Slider (elem, opt) {
