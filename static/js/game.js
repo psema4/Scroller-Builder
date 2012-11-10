@@ -17,6 +17,11 @@ function GameEngine(opts) {
       , gameData = {}
       , level = 0
       , audio = new AudioEngine()
+      , sprites = new SpriteManager()
+
+      , engine = {
+            state: 'loading'
+        }
 
       , $ = function(sel) { return document.querySelector(sel); }
       , $$ = function(sel) { return document.querySelectorAll(sel); }
@@ -90,8 +95,15 @@ function GameEngine(opts) {
                 }
             }
 
-            // FIXME: engine state
-            drawTitles();
+            if (engine.state == 'level-title') {
+                if (ticks - engine.levelStartTicks > gameData.titleDelay) {
+                    engine.state = 'level-playing';
+                } else {
+                    drawTitles();
+                }
+            }
+
+            if (engine.state == 'level-playing') sprites.drawSprites();
         }
 
       , clearScreen = function() {
@@ -166,8 +178,9 @@ function GameEngine(opts) {
 
                 var musicName = 'level-' + level + '-music';
                 audio.loadMusic(musicName, gameData.levels[level].music, function() {
-                    logger('loaded music', musicName);
                     $('#'+musicName).play();
+                    engine.state = 'level-title';
+                    engine.levelStartTicks = ticks;
                 });
 
                 //publish game settings for panel
@@ -177,6 +190,7 @@ function GameEngine(opts) {
                 pubsub.publish('level/description', gameData.levels[level].description);
                 pubsub.publish('level/music',       gameData.levels[level].music);
 
+                engine.state = 'loaded';
                 if (cb && typeof(cb) == 'function') cb(gameData);
             };
 
@@ -189,6 +203,8 @@ function GameEngine(opts) {
             if (gameData && gameData.levels) {
                 stopTicking();
                 if (++level == gameData.levels.length) level = 0;
+                engine.state = 'level-title';
+                engine.levelStartTicks = ticks;
 
                 // stop all audio
                 var tracks = $$('.music');
@@ -216,7 +232,9 @@ function GameEngine(opts) {
             }
         }
 
-     , getLevelData = function() { return gameData.levels[level]; }
+      , getLevelData = function() { return gameData.levels[level]; }
+
+      , getEngineState = function() { return engine; }
     ;
 
     // Constructor
@@ -261,5 +279,6 @@ function GameEngine(opts) {
       , nextLevel: nextLevel
       , getLevelData: getLevelData
       , audio: audio
+      , getEngineState: getEngineState
     };
 }

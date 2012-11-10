@@ -13,6 +13,10 @@ function Sprite(opts) {
 function SpriteManager(opts) {
     opts = opts || {};
 
+    var drawSprites = function() {
+    };
+
     return {
+        drawSprites: drawSprites
     };
 }

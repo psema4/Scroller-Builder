@@ -10,6 +10,7 @@
         "x": 0,
         "y": 0
     },
+    "titleDelay": 200,
     "levels":   [
         {
             "title":       "Level 1",
