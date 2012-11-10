@@ -6,5 +6,5 @@ function GameEngine(opts) {
     opts = opts || {};
 
     return {
-    }
+    };
 }

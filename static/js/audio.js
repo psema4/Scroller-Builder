@@ -7,5 +7,5 @@ function AudioEngine(opts) {
     opts = opts || {};
 
     return {
-    }
-});
+    };
+}
