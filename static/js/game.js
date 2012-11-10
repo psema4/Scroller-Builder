@@ -14,6 +14,7 @@ function GameEngine(opts) {
       , ctx // canvas context
       , stars = []
       , gameData = {}
+      , level = 0
 
       , $ = function(sel) { return document.querySelector(sel); }
       , $$ = function(sel) { return document.querySelectorAll(sel); }
@@ -54,10 +55,24 @@ function GameEngine(opts) {
 
       , update = function() {
             if (isTicking) requestAnimationFrame(update);
-            ticks++;
 
+            ticks++;
             clearScreen();
-            drawStars();
+
+            // handle backgrounds
+            if (gameData && gameData.levels) {
+                switch(gameData.levels[0].backgroundType) {
+                    case 'stars':
+                        drawStars();
+                        break;
+
+                    default:
+                        // none
+                }
+            }
+
+            // FIXME: engine state
+            drawTitles();
         }
 
       , clearScreen = function() {
@@ -87,6 +102,30 @@ function GameEngine(opts) {
             }
         }
 
+        // FIXME: engine state
+      , drawTitles = function() {
+            if (! (gameData && gameData.levels)) return;
+
+            var centeredX = parseInt(screen.width/2)
+              , centeredY = parseInt(screen.height/2)
+              , titleY    = parseInt(screen.height/4)
+              , subtitleY = centeredY
+            ;
+
+            ctx.textAlign = 'center';
+            ctx.font = '64px Ariel, sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,1.0)';
+            ctx.fillText(gameData.levels[level].title, centeredX, titleY);
+
+            ctx.font = '32px Ariel, sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,1.0)';
+
+//            if (engine.state == 'mainmenu') {
+//            } else {
+            ctx.fillText(gameData.levels[level].description, centeredX, subtitleY);
+//            }
+        }
+
         // FIXME: error handling
       , loadGame = function(url, cb) {
             var xhr = new XMLHttpRequest();
@@ -96,6 +135,7 @@ function GameEngine(opts) {
 
             xhr.onload = function() {
                 gameData = JSON.parse(xhr.responseText);
+                level = 0
 
                 if (cb && typeof(cb) == 'function') cb(gameData);
             };
@@ -104,6 +144,14 @@ function GameEngine(opts) {
         }
 
       , getGameData = function() { return gameData; }
+
+      , nextLevel = function() {
+            if (gameData && gameData.levels) {
+                if (++level == gameData.levels.length) level = 0;
+            }
+        }
+
+     , getLevelData = function() { return gameData.levels[level]; }
     ;
 
     // Constructor
@@ -116,12 +164,13 @@ function GameEngine(opts) {
         });
     }
 
-    if (getCtx()) // start ticking
+    if (getCtx())
         startTicking()
     else
         logger('failed to get context')
     ;
 
+    // public api
     return {
         update: update
       , getCtx: getCtx
@@ -130,5 +179,7 @@ function GameEngine(opts) {
       , stopTicking: stopTicking
       , loadGame: loadGame
       , getGameData: getGameData
+      , nextLevel: nextLevel
+      , getLevelData: getLevelData
     };
 }
