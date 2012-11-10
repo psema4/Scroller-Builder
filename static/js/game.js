@@ -6,6 +6,7 @@ function GameEngine(opts) {
     opts = opts || {};
 
     var ticks = 0
+      , tickDirection = +1
       , isTicking = false
       , screen = {
             width: 640
@@ -53,10 +54,21 @@ function GameEngine(opts) {
             return ticks;
         }
 
+      , setTickDirection = function() {
+            if (tickDirection > 0)
+                tickDirection = -1
+            else
+                tickDirection = 1
+            ;
+
+            return tickDirection
+        }
+
       , update = function() {
             if (isTicking) requestAnimationFrame(update);
 
-            ticks++;
+            ticks += 1 * tickDirection;
+            if (ticks < 0) { tickDirection = 1; stopTicking(); }
             clearScreen();
 
             // handle backgrounds
@@ -90,11 +102,19 @@ function GameEngine(opts) {
             ctx.fillStyle = 'rgba(255,255,255,1.0)';
 
             for (var i=0; i < stars.length; i++) {
-                if (ticks - stars[i].lastTick > stars[i].speed) {
-                    stars[i].lastTick = ticks;
-                    stars[i].y++;
-                    if (stars[i].y > screen.height) {
-                        stars[i].y = 0;
+                if (tickDirection > 0) {
+                    if (ticks - stars[i].lastTick > stars[i].speed) {
+                        stars[i].lastTick = ticks;
+                        stars[i].y++;
+                        if (stars[i].y > screen.height) stars[i].y = 0;
+                    }
+
+
+                } else { // reverse time
+                    if (Math.abs(ticks - stars[i].lastTick) > stars[i].speed) {
+                        stars[i].lastTick = ticks;
+                        stars[i].y--;
+                        if (stars[i].y <= 0) stars[i].y = screen.height-1;
                     }
                 }
 
@@ -177,6 +197,7 @@ function GameEngine(opts) {
       , getTicks: getTicks
       , startTicking: startTicking
       , stopTicking: stopTicking
+      , setTickDirection: setTickDirection
       , loadGame: loadGame
       , getGameData: getGameData
       , nextLevel: nextLevel
