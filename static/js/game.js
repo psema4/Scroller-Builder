@@ -6,11 +6,16 @@ function GameEngine(opts) {
     opts = opts || {};
 
     var ticks = 0
+      , isTicking = false
       , screen = {
             width: 640
           , height: 480
         }
       , ctx // canvas context
+      , stars = []
+
+      , $ = function(sel) { return document.querySelector(sel); }
+      , $$ = function(sel) { return document.querySelectorAll(sel); }
 
       , logger = function() { console.log('GameEngine', arguments); }
 
@@ -19,7 +24,8 @@ function GameEngine(opts) {
             if (ctx && typeof(ctx.fillStyle) != 'undefined') return ctx;
 
             // otherwise try and get it
-            var el = document.querySelector('#game-screen');
+            var el = $('#game-screen');
+
             if (el && typeof(el.getContext) != "undefined")
                     ctx = el.getContext('2d')
                 else
@@ -32,20 +38,30 @@ function GameEngine(opts) {
             return ctx;
         }
 
+      , startTicking = function() {
+            isTicking = true;
+            update();
+        }
+
+      , stopTicking = function() {
+            isTicking = false;
+        }
+
       , getTicks = function() {
             return ticks;
         }
 
       , update = function() {
-            requestAnimationFrame(update);
+            if (isTicking) requestAnimationFrame(update);
             ticks++;
 
             clearScreen();
-            drawSomething();
+            drawStars();
         }
 
       , clearScreen = function() {
-            var el = document.querySelector('#game-screen');
+            var el = $('#game-screen');
+
             if (el && typeof(el.getContext) != "undefined")
                     el.width = screen.width;
                 else
@@ -53,14 +69,35 @@ function GameEngine(opts) {
             ;
         }
 
-      , drawSomething = function() {
-            ctx.fillStyle = 'rgba(255,0,0,1.0)';
-            ctx.fillRect(0,0,100,100);
+      , drawStars = function() {
+            ctx.font = '24px Ariel, sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,1.0)';
+
+            for (var i=0; i < stars.length; i++) {
+                if (ticks - stars[i].lastTick > stars[i].speed) {
+                    stars[i].lastTick = ticks;
+                    stars[i].y++;
+                    if (stars[i].y > screen.height) {
+                        stars[i].y = 0;
+                    }
+                }
+
+                ctx.fillText('.', stars[i].x, stars[i].y);
+            }
         }
     ;
 
+    for (var i=0; i<50; i++) {
+        stars.push({
+            x: Math.floor(Math.random() * screen.width)
+          , y: Math.floor(Math.random() * screen.height)
+          , speed: Math.floor(Math.random() * 3) + 1
+          , lastTick: ticks
+        });
+    }
+
     if (getCtx()) // start ticking
-        update()
+        startTicking()
     else
         logger('failed to get context')
     ;
@@ -69,5 +106,7 @@ function GameEngine(opts) {
         update: update
       , getCtx: getCtx
       , getTicks: getTicks
+      , startTicking: startTicking
+      , stopTicking: stopTicking
     };
 }
