@@ -3,6 +3,7 @@
  * app init and globals
  */
 
+// simple polyfills
 if (typeof(window.console) == 'undefined') {
     window.console = {
         log:   function() {}
@@ -11,6 +12,18 @@ if (typeof(window.console) == 'undefined') {
       , dir:   function() {}
     }
 }
+
+window.requestAnimationFrame = (function() {
+    return window.requestAnimationFrame
+        || window.webkitRequestAnimationFrame
+        || window.mozRequestAnimationFrame
+        || window.oRequestAnimationFrame
+        || window.msRequestAnimationFrame
+        || function(callback, element) {
+            return window.setTimeout(function() { callback(Date.now()); }, 1000/60);
+           }
+    ;
+})();
 
 window.addEventListener('load', function() {
     console.log('app init');
