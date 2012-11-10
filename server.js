@@ -1,7 +1,10 @@
-var http = require('http');
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hello World\n');
-}).listen(8000);
+var express = require('express');
+var app = express();
 
-console.log('Server running at http://0.0.0.0:8000/');
+app.use(express.static(__dirname + '/static'));
+
+app.get('/', function (req, res) {
+	res.send('Hello');
+});
+
+app.listen(3000);
