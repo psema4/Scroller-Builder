@@ -63,7 +63,13 @@
  			game.stopTicking();
  			this.paused = true;
  		}
+ 		tick_slider.setValue(0);
  	};
+
+ 	$('next_lvl_btn').onclick = function () {
+ 		game.nextLevel();
+ 		game.update();
+ 	}
 
  	function Slider (elem, opt) {
  		opt || (opt = {});
@@ -77,7 +83,7 @@
           , setValue = function (val) {
 	 			if (val < min) val = min;
 	 			if (val > max) val = max;
-	 			handle.style.left = (val + min) / (max - min) * (elem.offsetWidth - handle.offsetWidth) - 2 + 'px';
+	 			handle.style.left = (val - min) / (max - min) * (elem.offsetWidth - handle.offsetWidth) - 2 + 'px';
 	 			if (value !== val) listener(value = val);
 	 		}
 	 	  , getValue = function () {
@@ -116,12 +122,18 @@
  		};
  	}
 
- 	var tick_slider = new Slider($('tick_slider'));
-
- 	tick_slider.setValue(50);
+ 	var tick_slider = new Slider($('tick_slider'), {min: -500, max: 500}), anchor = 0, play_pause_btn = $('play_pause_btn');
 
  	tick_slider.onChange(function (val) {
- 		console.log('Tick Slider', val);
+ 		if (play_pause_btn.paused) {
+ 			game.setTicks(0 | anchor + val);
+ 			game.update();
+ 		}
+ 		else
+ 		{
+ 			play_pause_btn.onclick();
+ 			anchor = game.getTicks();
+ 		}
  	});
 
  } ());

@@ -105,8 +105,13 @@ input {
 
 }
 
+#next_lvl_btn {
+	font-size: .8em;
+	margin-left: 5px;
+}
+
 #tick_slider {
-	width: 600px;
+	width: 550px;
 	display: inline-block;
 	top: 7px;
 }
