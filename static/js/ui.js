@@ -32,4 +32,18 @@
  		}
  	};
 
+ 	$('play_pause_btn').onclick = function () {
+ 		if (this.paused) {
+ 			this.innerHTML = '| |';
+ 			game.startTicking();
+ 			this.paused = false;
+ 		}
+ 		else
+ 		{
+ 			this.innerHTML = '►';
+ 			game.stopTicking();
+ 			this.paused = true;
+ 		}
+ 	};
+
  } ());
