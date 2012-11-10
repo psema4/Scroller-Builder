@@ -69,6 +69,8 @@ function GameEngine(opts) {
 
             ticks += 1 * tickDirection;
             if (ticks < 0) { tickDirection = 1; stopTicking(); }
+            pubsub.publish('engine/ticks', ticks);
+
             clearScreen();
 
             // handle backgrounds

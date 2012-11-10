@@ -25,9 +25,28 @@ window.requestAnimationFrame = (function() {
     ;
 })();
 
+function $(sel) { document.querySelector(sel); }
+function $$(sel) { return document.querySelectorAll(sel); }
+
 window.addEventListener('load', function() {
     console.log('app init');
 
+    // Settings panel subscriptions
+    var subscriptions = []
+      , inputHandlers = {
+        'engine/ticks': function() {
+                            $$('#engine-ticks')[0].value = arguments[1];
+                        }
+    };
+
+    var settingsInputs = $$('.setting');
+
+    [].forEach.call(settingsInputs, function(setting) {
+        var topic = setting.id.replace(/-/g, '/');
+        subscriptions.push(pubsub.subscribe(topic, inputHandlers[topic]));
+    });
+
+    // Engine startup
     window.game = new GameEngine();
 
     game.loadGame('game.json', function(gameData) {

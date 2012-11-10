@@ -3,6 +3,7 @@
     <head>
         <title></title>
         <link rel="stylesheet" href="css/app.css" />
+        <script src="js/vendor/pubsub.js"></script>
         <script src="js/game.js"></script>
         <script src="js/audio.js"></script>
         <script src="js/sprite.js"></script>
@@ -26,6 +27,12 @@
         <div id="game-container">
             <canvas id="game-screen" width="640" height="480">Canvas support not found.</canvas>
             <br><a class="btn" id="play_pause_btn">| |</a> <div class=slider id="tick_slider"><div class="btn"></div></div><a class="btn" id="next_lvl_btn">►►</a>
+        </div>
+
+        <div id="settings-container">
+            <ul>
+                <li><label for="engine-ticks">Tick</label>&nbsp;<input id="engine-ticks" class="setting" type="number" /></li>
+            </ul>
         </div>
 
         <div id="sprite-container">
