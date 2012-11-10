@@ -29,4 +29,7 @@ window.addEventListener('load', function() {
     console.log('app init');
 
     window.game = new GameEngine();
+    game.loadGame('testgame.json', function(gameData) {
+        console.log('loaded game file', gameData);
+    });
 });
