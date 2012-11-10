@@ -4,7 +4,7 @@
     "license":  "TBD",
     "credits":  [
     ],
-    playerStartData: {
+    "playerStartData": {
         "lives": 3,
         "rateOfFire": 1,
         "x": 0,

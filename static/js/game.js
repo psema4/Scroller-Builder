@@ -13,6 +13,7 @@ function GameEngine(opts) {
         }
       , ctx // canvas context
       , stars = []
+      , gameData = {}
 
       , $ = function(sel) { return document.querySelector(sel); }
       , $$ = function(sel) { return document.querySelectorAll(sel); }
@@ -85,8 +86,27 @@ function GameEngine(opts) {
                 ctx.fillText('.', stars[i].x, stars[i].y);
             }
         }
+
+        // FIXME: error handling
+      , loadGame = function(url, cb) {
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', url, true);
+            xhr.responseType = 'text';
+
+            xhr.onload = function() {
+                gameData = JSON.parse(xhr.responseText);
+
+                if (cb && typeof(cb) == 'function') cb(gameData);
+            };
+
+            xhr.send();
+        }
+
+      , getGameData = function() { return gameData; }
     ;
 
+    // Constructor
     for (var i=0; i<50; i++) {
         stars.push({
             x: Math.floor(Math.random() * screen.width)
@@ -108,5 +128,7 @@ function GameEngine(opts) {
       , getTicks: getTicks
       , startTicking: startTicking
       , stopTicking: stopTicking
+      , loadGame: loadGame
+      , getGameData: getGameData
     };
 }
