@@ -50,6 +50,10 @@ function GameEngine(opts) {
             isTicking = false;
         }
 
+      , checkTicking = function() {
+            return isTicking;
+        }
+
       , getTicks = function() {
             return ticks;
         }
@@ -199,6 +203,7 @@ function GameEngine(opts) {
       , getTicks: getTicks
       , startTicking: startTicking
       , stopTicking: stopTicking
+      , checkTicking: checkTicking
       , setTickDirection: setTickDirection
       , loadGame: loadGame
       , getGameData: getGameData

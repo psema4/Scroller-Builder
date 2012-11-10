@@ -68,7 +68,7 @@
 
  	$('next_lvl_btn').onclick = function () {
  		game.nextLevel();
- 		game.update();
+ 		if (!game.checkTicking()) game.update();
  	}
 
  	function Slider (elem, opt) {
@@ -76,7 +76,7 @@
 
  		var min = opt.min || 0
  		  , max = opt.max || 100
- 		  , value = opt.value || 0
+ 		  , value = opt.value || (opt.value = 0)
  		  , handle = elem.querySelector('.btn')
  		  , dragging = false
  		  , listener = function () {}
@@ -113,6 +113,9 @@
 
  		on(document, 'mouseup', function () {
  			dragging = false;
+ 			if (opt.retain) {
+ 				setValue(opt.value)
+ 			}
  		})
 
  		return {
@@ -122,18 +125,13 @@
  		};
  	}
 
- 	var tick_slider = new Slider($('tick_slider'), {min: -500, max: 500}), anchor = 0, play_pause_btn = $('play_pause_btn');
+ 	var tick_slider = new Slider($('tick_slider'), {min: -1.5, max: 1.5, retain: true}), dir = 1;
 
  	tick_slider.onChange(function (val) {
- 		if (play_pause_btn.paused) {
- 			game.setTicks(0 | anchor + val);
- 			game.update();
- 		}
- 		else
- 		{
- 			play_pause_btn.onclick();
- 			anchor = game.getTicks();
- 		}
+ 		if (val === 0 && $('play_pause_btn').paused) game.stopTicking();
+ 		else if (!game.checkTicking()) game.startTicking();
+ 		var set = val < 0 ? -1 : 1;
+ 		if (set !== dir) game.setTickDirection(dir = set);
  	});
 
  } ());
