@@ -241,6 +241,7 @@ function GameEngine(opts) {
         }
 
       , getLevelData = function() { return gameData.levels[level]; }
+      , getLevel = function() { return level; }
 
       , getEngineState = function() { return engine; }
     ;
@@ -286,6 +287,7 @@ function GameEngine(opts) {
       , getGameData: getGameData
       , nextLevel: nextLevel
       , getLevelData: getLevelData
+      , getLevel: getLevel
       , audio: audio
       , getEngineState: getEngineState
     };
