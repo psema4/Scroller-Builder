@@ -123,6 +123,7 @@ input {
 	border: 2px solid #606060;
 	position: relative;
 	border-radius: 8px;
+	-webkit-user-select: none;
 }
 
 .slider .btn {
