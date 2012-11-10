@@ -6,11 +6,15 @@ function GameEngine(opts) {
     opts = opts || {};
 
     var ticks = 0
+      , isTicking = false
       , screen = {
             width: 640
           , height: 480
         }
       , ctx // canvas context
+
+      , $ = function(sel) { return document.querySelector(sel); }
+      , $$ = function(sel) { return document.querySelectorAll(sel); }
 
       , logger = function() { console.log('GameEngine', arguments); }
 
@@ -19,7 +23,8 @@ function GameEngine(opts) {
             if (ctx && typeof(ctx.fillStyle) != 'undefined') return ctx;
 
             // otherwise try and get it
-            var el = document.querySelector('#game-screen');
+            var el = $('#game-screen');
+
             if (el && typeof(el.getContext) != "undefined")
                     ctx = el.getContext('2d')
                 else
@@ -32,12 +37,21 @@ function GameEngine(opts) {
             return ctx;
         }
 
+      , startTicking = function() {
+            isTicking = true;
+            update();
+        }
+
+      , stopTicking = function() {
+            isTicking = false;
+        }
+
       , getTicks = function() {
             return ticks;
         }
 
       , update = function() {
-            requestAnimationFrame(update);
+            if (isTicking) requestAnimationFrame(update);
             ticks++;
 
             clearScreen();
@@ -45,7 +59,8 @@ function GameEngine(opts) {
         }
 
       , clearScreen = function() {
-            var el = document.querySelector('#game-screen');
+            var el = $('#game-screen');
+
             if (el && typeof(el.getContext) != "undefined")
                     el.width = screen.width;
                 else
@@ -60,7 +75,7 @@ function GameEngine(opts) {
     ;
 
     if (getCtx()) // start ticking
-        update()
+        startTicking()
     else
         logger('failed to get context')
     ;
@@ -69,5 +84,7 @@ function GameEngine(opts) {
         update: update
       , getCtx: getCtx
       , getTicks: getTicks
+      , startTicking: startTicking
+      , stopTicking: stopTicking
     };
 }
