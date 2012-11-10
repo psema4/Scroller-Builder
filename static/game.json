@@ -17,6 +17,21 @@
             "description": "Go!",
             "music":       "/assets/music/level1.mp3",
             "backgroundType": "stars",
+            "spritesheet": "/assets/img/spaceArt.png",
+            "sprites": {
+                "player": {
+                    "startx": 265,
+                    "starty": 380,
+                    "frames": [
+                        {
+                            "srcx": 371,
+                            "srcy": 363,
+                            "srcw": 110,
+                            "srch": 90
+                        }
+                    ]
+                }
+            },
             "waves": [
                 {
                     "sprite": "/assets/img/sprite1.png",
@@ -35,6 +50,19 @@
             "description": "Survive!",
             "music":       "/assets/music/level2.mp3",
             "backgroundType": "stars",
+            "spritesheet": "/assets/img/spaceArt.png",
+            "sprites": {
+                "player": {
+                    "frames": [
+                        {
+                            "srcx": 0,
+                            "srcy": 0,
+                            "srcw": 64,
+                            "srch": 64
+                        }
+                    ]
+                }
+            },
             "waves": [
                 {
                     "sprite": "/assets/img/sprite1.png",

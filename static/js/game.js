@@ -103,7 +103,7 @@ function GameEngine(opts) {
                 }
             }
 
-            if (engine.state == 'level-playing') sprites.drawSprites();
+            if (engine.state == 'level-playing') sprites.drawSprites(ctx);
         }
 
       , clearScreen = function() {
@@ -176,11 +176,19 @@ function GameEngine(opts) {
                 gameData = JSON.parse(xhr.responseText);
                 level = 0;
 
-                var musicName = 'level-' + level + '-music';
-                audio.loadMusic(musicName, gameData.levels[level].music, function() {
-                    $('#'+musicName).play();
-                    engine.state = 'level-title';
-                    engine.levelStartTicks = ticks;
+                var namePrefix = 'level-' + level
+                  , spritesheetName = namePrefix + '-sprites'
+                  , musicName = namePrefix + '-music'
+                ;
+
+                sprites.loadSpritesheet(spritesheetName, gameData.levels[level].spritesheet, function() {
+                    var playerSpriteData = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.player);
+
+                    audio.loadMusic(musicName, gameData.levels[level].music, function() {
+                        $('#'+musicName).play();
+                        engine.state = 'level-title';
+                        engine.levelStartTicks = ticks;
+                    });
                 });
 
                 //publish game settings for panel
