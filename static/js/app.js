@@ -2,3 +2,7 @@
  *
  * app init and globals
  */
+
+window.addEventListener('load', function() {
+    console.log('app init');
+});
