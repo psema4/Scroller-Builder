@@ -1,0 +1,50 @@
+{
+    "title":    "Game 1",
+    "subtitle": "New Game",
+    "license":  "TBD",
+    "credits":  [
+    ],
+    playerStartData: {
+        "lives": 3,
+        "rateOfFire": 1,
+        "x": 0,
+        "y": 0
+    },
+    "levels":   [
+        {
+            "title":       "Level 1",
+            "description": "Go!",
+            "music":       "/assets/music/level1.mp3",
+            "backgroundType": "stars",
+            "waves": [
+                {
+                    "sprite": "/assets/img/sprite1.png",
+                    "class": 1,
+                    "at": 5
+                }, {
+                    "sprite": "/assets/img/sprite1.png",
+                    "class": 1,
+                    "at": 10
+                }
+            ]
+        },
+
+        {
+            "title":       "Level 2",
+            "description": "Survive!",
+            "music":       "/assets/music/Level2.mp3",
+            "backgroundType": "stars",
+            "waves": [
+                {
+                    "sprite": "/assets/img/sprite1.png",
+                    "class": 1,
+                    "at": 5
+                }, {
+                    "sprite": "/assets/img/sprite1.png",
+                    "class": 1,
+                    "at": 10
+                }
+            ]
+        }
+    ]
+}
