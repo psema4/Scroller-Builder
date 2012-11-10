@@ -34,3 +34,17 @@ body {
 .btn:hover {
 	background: #606060;
 }
+
+#game-container {
+    position: absolute;
+    top: 3.5em;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    text-align: center;
+}
+#game-screen {
+    width: 640px;
+    height: 480px;
+    background-color: #000;
+}

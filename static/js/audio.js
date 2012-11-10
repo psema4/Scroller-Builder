@@ -7,7 +7,7 @@ function AudioEngine(opts) {
     opts = opts || {};
 
     var ctx // webkitAudioContext
-      , logger = function() { console.log('GameEngine', arguments); }
+      , logger = function() { console.log('AudioEngine', arguments); }
     ;
 
     return {
