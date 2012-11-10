@@ -175,6 +175,7 @@ function GameEngine(opts) {
                 pubsub.publish('game/subtitle',     gameData.subtitle);
                 pubsub.publish('level/title',       gameData.levels[level].title);
                 pubsub.publish('level/description', gameData.levels[level].description);
+                pubsub.publish('level/music',       gameData.levels[level].music);
 
                 if (cb && typeof(cb) == 'function') cb(gameData);
             };
@@ -211,6 +212,7 @@ function GameEngine(opts) {
                 pubsub.publish('engine/level', (level+1));
                 pubsub.publish('level/title',       gameData.levels[level].title);
                 pubsub.publish('level/description', gameData.levels[level].description);
+                pubsub.publish('level/music',       gameData.levels[level].music);
             }
         }
 
@@ -236,6 +238,14 @@ function GameEngine(opts) {
     // publish initial engine settings for panel
     pubsub.publish('engine/ticks', ticks);
     pubsub.publish('engine/level', (level+1));
+
+    // subscribe to changes from panel
+    pubsub.subscribe('set/game/title', function(topic, v) { gameData.title = v; }); 
+    pubsub.subscribe('set/game/subtitle', function(topic, v) { gameData.subtitle = v; }); 
+
+    pubsub.subscribe('set/level/title', function(topic, v) { gameData.levels[level].title = v; }); 
+    pubsub.subscribe('set/level/description', function(topic, v) { gameData.levels[level].description = v; }); 
+    pubsub.subscribe('set/level/music', function(topic, v) { gameData.levels[level].music = v; }); 
 
     // public api
     return {

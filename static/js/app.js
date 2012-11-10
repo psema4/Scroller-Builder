@@ -35,17 +35,19 @@ window.addEventListener('load', function() {
     var subscriptions = []
       , handlers = {
             'engine/ticks':
-                function() { $$('#engine-ticks')[0].value = arguments[1]; }
+                function() { var el = $('#engine-ticks'); el.value = arguments[1]; }
           , 'engine/level':
-                function() { $$('#engine-level')[0].value = arguments[1]; }
+                function() { var el = $('#engine-level'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/engine/level', this.value); }; }
           , 'game/title':
-                function() { $$('#game-title')[0].value = arguments[1]; }
+                function() { var el = $('#game-title'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/game/title', this.value); }; }
           , 'game/subtitle':
-                function() { $$('#game-subtitle')[0].value = arguments[1]; }
+                function() { var el = $('#game-subtitle'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/game/subtitle', this.value); }; }
           , 'level/title':
-                function() { $$('#level-title')[0].value = arguments[1]; }
+                function() { var el = $('#level-title'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/level/title', this.value); }; }
           , 'level/description':
-                function() { $$('#level-description')[0].value = arguments[1]; }
+                function() { var el = $('#level-description'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/level/description', this.value); }; }
+          , 'level/music':
+                function() { var el = $('#level-music'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/level/music', this.value); }; }
         }
       , settingsInputs = $$('.setting')
     ;
