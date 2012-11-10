@@ -12,6 +12,7 @@ function GameEngine(opts) {
           , height: 480
         }
       , ctx // canvas context
+      , stars = []
 
       , $ = function(sel) { return document.querySelector(sel); }
       , $$ = function(sel) { return document.querySelectorAll(sel); }
@@ -55,7 +56,7 @@ function GameEngine(opts) {
             ticks++;
 
             clearScreen();
-            drawSomething();
+            drawStars();
         }
 
       , clearScreen = function() {
@@ -68,11 +69,32 @@ function GameEngine(opts) {
             ;
         }
 
-      , drawSomething = function() {
-            ctx.fillStyle = 'rgba(255,0,0,1.0)';
-            ctx.fillRect(0,0,100,100);
+      , drawStars = function() {
+            ctx.font = '24px Ariel, sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,1.0)';
+
+            for (var i=0; i < stars.length; i++) {
+                if (ticks - stars[i].lastTick > stars[i].speed) {
+                    stars[i].lastTick = ticks;
+                    stars[i].y++;
+                    if (stars[i].y > screen.height) {
+                        stars[i].y = 0;
+                    }
+                }
+
+                ctx.fillText('.', stars[i].x, stars[i].y);
+            }
         }
     ;
+
+    for (var i=0; i<50; i++) {
+        stars.push({
+            x: Math.floor(Math.random() * screen.width)
+          , y: Math.floor(Math.random() * screen.height)
+          , speed: Math.floor(Math.random() * 3) + 1
+          , lastTick: ticks
+        });
+    }
 
     if (getCtx()) // start ticking
         startTicking()
