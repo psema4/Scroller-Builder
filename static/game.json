@@ -32,7 +32,7 @@
         {
             "title":       "Level 2",
             "description": "Survive!",
-            "music":       "/assets/music/Level2.mp3",
+            "music":       "/assets/music/level2.mp3",
             "backgroundType": "stars",
             "waves": [
                 {

@@ -16,6 +16,7 @@ function GameEngine(opts) {
       , stars = []
       , gameData = {}
       , level = 0
+      , audio = new AudioEngine()
 
       , $ = function(sel) { return document.querySelector(sel); }
       , $$ = function(sel) { return document.querySelectorAll(sel); }
@@ -163,6 +164,12 @@ function GameEngine(opts) {
                 gameData = JSON.parse(xhr.responseText);
                 level = 0;
 
+                var musicName = 'level-' + level + '-music';
+                audio.loadMusic(musicName, gameData.levels[level].music, function() {
+                    logger('loaded music', musicName);
+                    $('#'+musicName).play();
+                });
+
                 //publish game settings for panel
                 pubsub.publish('game/title',        gameData.title);
                 pubsub.publish('game/subtitle',     gameData.subtitle);
@@ -179,7 +186,26 @@ function GameEngine(opts) {
 
       , nextLevel = function() {
             if (gameData && gameData.levels) {
+                stopTicking();
                 if (++level == gameData.levels.length) level = 0;
+
+                // stop all audio
+                var tracks = $$('.music');
+                [].forEach.call(tracks, function(track) { track.currentTime=0; track.pause(); });
+
+                var musicName = 'level-' + level + '-music';
+                var audioEl = $('#'+musicName);
+                if (audioEl) {
+                    audioEl.play();
+                    startTicking();
+
+                } else {
+                    audio.loadMusic(musicName, gameData.levels[level].music, function() {
+                        logger('loaded music', musicName);
+                        $('#'+musicName).play();
+                        startTicking();
+                    });
+                }
 
                 // publish engine & level updates
                 pubsub.publish('engine/level', (level+1));
@@ -224,5 +250,6 @@ function GameEngine(opts) {
       , getGameData: getGameData
       , nextLevel: nextLevel
       , getLevelData: getLevelData
+      , audio: audio
     };
 }

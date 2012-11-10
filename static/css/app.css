@@ -187,3 +187,10 @@ input.setting {
     top: -1000px;
     left: -1000px;
 }
+
+/* Audio */
+#audio-container {
+    position: absolute;
+    top: -2000px;
+    left: -1000px;
+}
