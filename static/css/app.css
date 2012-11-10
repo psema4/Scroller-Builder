@@ -109,3 +109,9 @@ input {
     height: 480px;
     background-color: #000;
 }
+
+#sprite-container {
+    position: absolute;
+    top: -1000px;
+    left: -1000px;
+}
