@@ -1,3 +1,5 @@
+// simple pubsub from http://addyosmani.com/resources/essentialjsdesignpatterns/book/
+
 var pubsub = {};
 
 (function(q) {

@@ -161,7 +161,13 @@ function GameEngine(opts) {
 
             xhr.onload = function() {
                 gameData = JSON.parse(xhr.responseText);
-                level = 0
+                level = 0;
+
+                //publish game settings for panel
+                pubsub.publish('game/title',        gameData.title);
+                pubsub.publish('game/subtitle',     gameData.subtitle);
+                pubsub.publish('level/title',       gameData.levels[level].title);
+                pubsub.publish('level/description', gameData.levels[level].description);
 
                 if (cb && typeof(cb) == 'function') cb(gameData);
             };
@@ -174,6 +180,11 @@ function GameEngine(opts) {
       , nextLevel = function() {
             if (gameData && gameData.levels) {
                 if (++level == gameData.levels.length) level = 0;
+
+                // publish engine & level updates
+                pubsub.publish('engine/level', (level+1));
+                pubsub.publish('level/title',       gameData.levels[level].title);
+                pubsub.publish('level/description', gameData.levels[level].description);
             }
         }
 
@@ -195,6 +206,10 @@ function GameEngine(opts) {
     else
         logger('failed to get context')
     ;
+
+    // publish initial engine settings for panel
+    pubsub.publish('engine/ticks', ticks);
+    pubsub.publish('engine/level', (level+1));
 
     // public api
     return {

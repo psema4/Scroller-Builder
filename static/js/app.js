@@ -33,17 +33,26 @@ window.addEventListener('load', function() {
 
     // Settings panel subscriptions
     var subscriptions = []
-      , inputHandlers = {
-        'engine/ticks': function() {
-                            $$('#engine-ticks')[0].value = arguments[1];
-                        }
-    };
-
-    var settingsInputs = $$('.setting');
+      , handlers = {
+            'engine/ticks':
+                function() { $$('#engine-ticks')[0].value = arguments[1]; }
+          , 'engine/level':
+                function() { $$('#engine-level')[0].value = arguments[1]; }
+          , 'game/title':
+                function() { $$('#game-title')[0].value = arguments[1]; }
+          , 'game/subtitle':
+                function() { $$('#game-subtitle')[0].value = arguments[1]; }
+          , 'level/title':
+                function() { $$('#level-title')[0].value = arguments[1]; }
+          , 'level/description':
+                function() { $$('#level-description')[0].value = arguments[1]; }
+        }
+      , settingsInputs = $$('.setting')
+    ;
 
     [].forEach.call(settingsInputs, function(setting) {
         var topic = setting.id.replace(/-/g, '/');
-        subscriptions.push(pubsub.subscribe(topic, inputHandlers[topic]));
+        subscriptions.push(pubsub.subscribe(topic, handlers[topic]));
     });
 
     // Engine startup
