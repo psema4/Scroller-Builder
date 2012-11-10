@@ -9,18 +9,37 @@
  		return document.getElementById(id);
  	}
 
- 	// Class functions; rewrite depending on browser support
+ 	// Helper functions; rewrite depending on browser support
+
+ 	// Add class to element
  	function add (elem, cls) {
  		elem.classList.add(cls);
  	}
 
+ 	// Remove class from element
  	function remove (elem, cls) {
  		elem.classList.remove(cls);
  	}
 
+ 	// Return if element has class
  	function has (elem, cls) {
  		return elem.classList.contains(cls);
  	}
+
+ 	// Bind an event to an element
+ 	function on (elem, evt, handler) {
+ 		elem.addEventListener(evt, handler, false);
+ 	}
+
+ 	// Get the left position of an element
+ 	function left (elem) {
+ 		var left = elem.offsetLeft;
+ 		while (elem = elem.offsetParent) {
+ 			left += elem.offsetLeft;
+ 		}
+ 		return left;
+ 	}
+
 
  	$('login_btn').onclick = function () {
  		add($('login_form'), 'shown');
@@ -45,5 +64,64 @@
  			this.paused = true;
  		}
  	};
+
+ 	function Slider (elem, opt) {
+ 		opt || (opt = {});
+
+ 		var min = opt.min || 0
+ 		  , max = opt.max || 100
+ 		  , value = opt.value || 0
+ 		  , handle = elem.querySelector('.btn')
+ 		  , dragging = false
+ 		  , listener = function () {}
+          , setValue = function (val) {
+	 			if (val < min) val = min;
+	 			if (val > max) val = max;
+	 			handle.style.left = (val + min) / (max - min) * (elem.offsetWidth - handle.offsetWidth) - 2 + 'px';
+	 			if (value !== val) listener(value = val);
+	 		}
+	 	  , getValue = function () {
+	 	  		return value; 
+	 	  	}
+	 	  , onChange = function (fn) {
+	 	  		listener = fn;
+	 	  	}
+
+ 		setValue(value)
+
+ 		elem.onmousedown = function (e) {
+ 			if (has(e.target, 'btn')) {
+ 				dragging = true;
+ 			}
+ 			else
+ 			{
+ 				setValue((e.pageX - left(elem)) / elem.offsetWidth * (max - min) + min);
+ 			}
+ 		}
+
+ 		on(document, 'mousemove', function (e) {
+ 			if (dragging) {
+ 				setValue((e.pageX - left(elem)) / elem.offsetWidth * (max - min) + min);
+ 			}
+ 		})
+
+ 		on(document, 'mouseup', function () {
+ 			dragging = false;
+ 		})
+
+ 		return {
+ 			setValue: setValue,
+ 			getValue: getValue,
+ 			onChange: onChange
+ 		};
+ 	}
+
+ 	var tick_slider = new Slider($('tick_slider'));
+
+ 	tick_slider.setValue(50);
+
+ 	tick_slider.onChange(function (val) {
+ 		console.log('Tick Slider', val);
+ 	});
 
  } ());
