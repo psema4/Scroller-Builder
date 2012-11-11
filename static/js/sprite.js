@@ -19,6 +19,28 @@ function Sprite(opts) {
       , value = opts.value || 0
       , x = opts.startx || 0
       , y = opts.starty || 0
+      , _img = new Image()
+
+      , saveAsImage = function() {
+            var srcEl = $('#'+spritesheet)
+              , w = frames[frame].srcw
+              , h = frames[frame].srch
+              , tmpCanvas = document.createElement('canvas')
+              , tmpCtx = tmpCanvas.getContext('2d')
+            ;
+
+            tmpCanvas.width = w;
+            tmpCanvas.height = h;
+
+            // copy sprite source frame to tmpCanvas
+            tmpCtx.drawImage( srcEl,
+                frames[frame].srcx, frames[frame].srcy, w, h,
+                0, 0, w, h
+            );
+
+            _img.src = tmpCanvas.toDataURL("image/png");
+        }
+      , getDataURL = function() { if (_img.src == "") saveAsImage(); return _img.src; }
 
       , logger = function() { console.log('Sprite:', arguments) }
 
@@ -135,6 +157,8 @@ function Sprite(opts) {
       , fire: fire
       , setScore: setScore
       , setValue: setValue
+      , saveAsImage: saveAsImage
+      , getDataURL: getDataURL
     };
 }
 

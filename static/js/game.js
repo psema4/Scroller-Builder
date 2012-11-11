@@ -227,7 +227,6 @@ try {
 
                 sprites.loadSpritesheet(spritesheetName, gameData.levels[level].spritesheet, function() {
                     var playerSpriteData     = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.player)
-/*
                       , playerFireSpriteData = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerFire)
                       , playerHitSpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerHit)
                       , playerLifeSpriteData = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerLife)
@@ -239,7 +238,6 @@ try {
 
                       , obstacle1SpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.obstacle1)
                       , obstacle2SpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.obstacle2)
-*/
                     ;
 
                     audio.loadMusic(musicName, gameData.levels[level].music, function() {
@@ -291,7 +289,6 @@ try {
                 sprites.removeAll();
                 sprites.loadSpritesheet(spritesheetName, gameData.levels[level].spritesheet, function() {
                     var playerSpriteData     = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.player)
-/*
                       , playerFireSpriteData = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerFire)
                       , playerHitSpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerHit)
                       , playerLifeSpriteData = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerLife)
@@ -303,7 +300,6 @@ try {
 
                       , obstacle1SpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.obstacle1)
                       , obstacle2SpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.obstacle2)
-*/
                     ;
 
                     sprites.queue[0].setScore(oldPlayerSprite.getInfo().score); // carry the current score forward
