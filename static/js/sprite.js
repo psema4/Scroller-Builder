@@ -145,6 +145,9 @@ function SpriteManager(opts) {
       , queue = []
 
       , loadSpritesheet = function(id, url, cb) {
+      		if (document.getElementById(id)) {
+      			return cb();
+      		}
             var el = document.createElement('img');
             el.id = id;
             el.className = 'spritesheet';
