@@ -30,6 +30,19 @@ function $$(sel) { return document.querySelectorAll(sel); }
 
 window.addEventListener('load', function() {
 
+    // Tool panel tab controller
+    window.tltabs = {
+        tab: function(targetTab) {
+            var tabs = $$('.tab2');
+
+            [].forEach.call(tabs, function(t) {
+                t.style.visibility = (t.id == targetTab) ? 'visible' : 'hidden';
+            });
+        }
+    };
+
+    tltabs.tab('tab-tools1');
+
     // Settings panel tab controller
     window.sptabs = {
         tab: function(targetTab) {

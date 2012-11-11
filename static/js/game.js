@@ -315,7 +315,6 @@ try {
 
                 } else {
                     audio.loadMusic(musicName, gameData.levels[level].music, function() {
-                        logger('loaded music', musicName);
                         $('#'+musicName).play();
                         startTicking();
                     });

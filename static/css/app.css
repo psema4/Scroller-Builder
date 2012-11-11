@@ -147,6 +147,25 @@ input {
 	top: 0;
 }
 
+/* Tools Panel */
+#tools-container {
+    position: absolute;
+    top: 3.5em;
+    left: 0.5em;
+    width: 300px;
+    bottom: 0.5em;
+    background-color: transparent;
+    opacity: 0.9;
+}
+
+.toolbox {
+    position: absolute;
+    top: 1.5em;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border-radius: 4px;
+}
 
 /* Settings Panel */
 #settings-container {
@@ -159,7 +178,7 @@ input {
     opacity: 0.9;
 }
 
-#tab-list {
+.tab-list {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -167,7 +186,7 @@ input {
     height: 1.5em;
 }
 
-#tab-containers {
+.tab-containers {
     position: absolute;
     top: 1.5em;
     left: 0px;
@@ -175,9 +194,10 @@ input {
     bottom: 0px;
 }
 
-.tab {
+.tab,
+.tab2 {
     position: absolute;
-    top: 1.5em;
+    top: 0em;
     left: 0px;
     right: 0px;
     bottom: 0px;
@@ -186,12 +206,14 @@ input {
     border-radius: 4px;
 }
 
+#tools-container ol,
 #settings-container ol {
     display: inline-block;
     margin: 0px;
     padding: 0px;
 }
 
+#tools-container ol li,
 #settings-container ol li {
     display: inline-block;
     padding: 4px;
@@ -212,17 +234,20 @@ ol li a:hover {
     color: #404040;
 }
 
+#tools-container ul,
 #settings-container ul {
     margin: 0px;
     padding: 0px;
 }
 
+#tools-container ul li
 #settings-container ul li {
     padding: 0px;
     list-style-type: none;
 }
 
-.tab h4 {
+.tab h4,
+.tab2 h4 {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -236,7 +261,8 @@ ol li a:hover {
     border-top-right-radius: 4px;
 }
 
-.tab ul {
+.tab ul,
+.tab2 ul {
     position: absolute;
     top: 1.5em;
     left: 0px;
