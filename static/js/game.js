@@ -23,10 +23,10 @@ function GameEngine(opts) {
       , engine = {
             state: 'loading'
         }
-
+/*
       , $ = function(sel) { return document.querySelector(sel); }
       , $$ = function(sel) { return document.querySelectorAll(sel); }
-
+*/
       , logger = function() { console.log('GameEngine', arguments); }
 
       , getCtx = function() {
@@ -144,8 +144,8 @@ function GameEngine(opts) {
             }
         }
 
-        // FIXME: engine state
       , drawTitles = function() {
+            if (engine.state != 'level-title')   return;
             if (! (gameData && gameData.levels)) return;
 
             var centeredX = parseInt(screen.width/2)
@@ -162,10 +162,7 @@ function GameEngine(opts) {
             ctx.font = '32px Ariel, sans-serif';
             ctx.fillStyle = 'rgba(255,255,255,1.0)';
 
-//            if (engine.state == 'mainmenu') {
-//            } else {
             ctx.fillText(gameData.levels[level].description, centeredX, subtitleY);
-//            }
         }
 
         // FIXME: error handling
@@ -185,7 +182,19 @@ function GameEngine(opts) {
                 ;
 
                 sprites.loadSpritesheet(spritesheetName, gameData.levels[level].spritesheet, function() {
-                    var playerSpriteData = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.player);
+                    var playerSpriteData     = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.player)
+                      , playerFireSpriteData = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerFire)
+                      , playerHitSpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerHit)
+                      , playerLifeSpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerLife)
+
+                      , enemy1SpriteData     = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.enemy1)
+                      , enemy2SpriteData     = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.enemy2)
+                      , enemyFireSpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.enemyFire)
+                      , enemyHitSpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.enemyHit)
+
+                      , obstacle1SpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.obstacle1)
+                      , obstacle2SpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.obstacle2)
+                    ;
 
                     audio.loadMusic(musicName, gameData.levels[level].music, function() {
                         $('#'+musicName).play();
@@ -253,11 +262,11 @@ function GameEngine(opts) {
               , sprite = sprites.queue[0]
               , levelData = gameData.levels[level]
 
-              , leftActions    = levelData.actions.left
-              , rightActions   = levelData.actions.right
-              , forwardActions = levelData.actions.forward
-              , backActions    = levelData.actions.back
-              , fireActions   = levelData.actions.fire
+              , leftActions    = levelData.playerActions.left
+              , rightActions   = levelData.playerActions.right
+              , forwardActions = levelData.playerActions.forward
+              , backActions    = levelData.playerActions.back
+              , fireActions    = levelData.playerActions.fire
             ;
 
             switch(key) {
