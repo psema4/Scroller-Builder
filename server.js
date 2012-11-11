@@ -1,4 +1,4 @@
-var port    = (process.env.NODE_ENV == 'production') ? 80 : 3000;
+var port    = (process.env.NODE_ENV == 'production') ? 80 : 3000
   , express = require('express')
   , app     = express()
 ;
