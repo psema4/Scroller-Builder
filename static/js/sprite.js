@@ -8,6 +8,7 @@ function Sprite(opts) {
 
     var spritesheet = opts.spritesheet
       , frame = opts.startFrame || 0
+      , defFrame = opts.startFrame || 0
       , frames = opts.frames || []
       , animate = opts.animate || false
       , animateSpeed = opts.animateSpeed || 1
@@ -38,6 +39,17 @@ function Sprite(opts) {
             if (animate && (game.getTicks()-lastAnimated >= animateSpeed)) {
                 nextFrame();
             }
+        }
+
+      , setFrame = function(targetFrame) {
+                lastAnimated = game.getTicks();
+                frame = targetFrame;
+                if (frame < 0) frame = 0;
+                if (frame >= frames.length-1) frame = frames.length-1;
+        }
+
+      , defaultFrame = function() {
+            setFrame(defFrame);
         }
 
       , nextFrame = function() {
@@ -89,6 +101,8 @@ function Sprite(opts) {
     return {
         moveTo: moveTo
       , draw: draw
+      , setFrame: setFrame
+      , defaultFrame: defaultFrame
       , nextFrame: nextFrame
       , prevFrame: prevFrame
       , getInfo: getInfo
