@@ -155,8 +155,59 @@ input {
     right: 0.5em;
     width: 25%;
     bottom: 0.5em;
-    background-color: #eee;
+    background-color: transparent;
     overflow: auto;
+}
+
+#tab-list {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 1.5em;
+}
+
+#tab-containers {
+    position: absolute;
+    top: 1.5em;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.tab {
+    position: absolute;
+    top: 1.5em;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 1;
+    background-color: #fff;
+}
+
+#settings-container ol {
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+}
+
+#settings-container ol li {
+    display: inline-block;
+    padding: 4px;
+    list-style-type: none;
+    background-color: #ccc;
+}
+
+ol li a,
+ol li a:active,
+ol li a:visited {
+    color: #000;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+ol li a:hover {
+    background-color: #eee;
 }
 
 #settings-container ul {
@@ -167,6 +218,14 @@ input {
 #settings-container ul li {
     padding: 0px;
     list-style-type: none;
+}
+
+.tab h4 {
+    margin: 0px;
+    padding: 0px;
+    padding-left: 1ex;
+    color: #fff;
+	background: #404040;
 }
 
 #settings-container label {

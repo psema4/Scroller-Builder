@@ -29,7 +29,20 @@ function $(sel) { return document.querySelector(sel); }
 function $$(sel) { return document.querySelectorAll(sel); }
 
 window.addEventListener('load', function() {
-    console.log('app init');
+
+    // Settings panel tab controller
+    window.sptabs = {
+        tab: function(targetTab) {
+            var tabs = $$('.tab');
+
+            [].forEach.call(tabs, function(t) {
+                t.style.visibility = 'hidden';
+                if (t.id == targetTab) t.style.visibility = 'visible';
+            });
+        }
+    };
+
+    sptabs.tab('tab-engine-settings');
 
     // Settings panel subscriptions
     var subscriptions = []

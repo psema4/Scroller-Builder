@@ -30,33 +30,52 @@
         </div>
 
         <div id="settings-container">
-            Engine
-            <ul>
-                <li><label for="engine-ticks">Tick</label><input id="engine-ticks" class="setting" type="number" disabled /></li>
-                <li><label for="engine-level">Level</label><input id="engine-level" class="setting" type="number" disabled /></li>
-            </ul>
+            <div class="tab-list">
+                <ol>
+                    <li><a href="#" onclick="sptabs.tab('tab-engine-settings');">Engine</a></li>
+                    <li><a href="#" onclick="sptabs.tab('tab-game-settings');">Game</a></li>
+                    <li><a href="#" onclick="sptabs.tab('tab-level-settings');">Level</a></li>
+                    <li><a href="#" onclick="sptabs.tab('tab-player-actions');">Player Actions</a></li>
+                </ol>
+                    </div>
 
-            Game
-            <ul>
-                <li><label for="game-title">Title</label><input id="game-title" class="setting" type="text" /></li>
-                <li><label for="game-subtitle">Subtitle</label><input id="game-subtitle" class="setting" type="text" /></li>
-                <li><label for="game-titleDelay">Title Delay</label><input id="game-titleDelay" class="setting" type="text" /></li>
-            </ul>
+            <div class="tab-containers">
+                <div id="tab-engine-settings" class="tab">
+                    <h4>Engine</h4>
+                    <ul>
+                        <li><label for="engine-ticks">Tick</label><input id="engine-ticks" class="setting" type="number" disabled /></li>
+                        <li><label for="engine-level">Level</label><input id="engine-level" class="setting" type="number" disabled /></li>
+                    </ul>
+                </div>
 
-            Level
-            <ul>
-                <li><label for="level-title">Title</label><input id="level-title" class="setting" type="text" /></li>
-                <li><label for="level-description">Description</label><input id="level-description" class="setting" type="text" /></li>
-                <li><label for="level-music">Music</label><input id="level-music" class="setting" type="text" /></li>
-                <li><label for="level-backgroundType">Background Type</label><input id="level-backgroundType" class="setting" type="text" /></li>
-                <li><label for="level-progressionType">Progression Type</label><input id="level-progressionType" class="setting" type="text" /></li>
-                <li><label for="level-progressionValue">Progression Value</label><input id="level-progressionValue" class="setting" type="text" /></li>
-            </ul>
+                <div id="tab-game-settings" class="tab">
+                    <h4>Game</h4>
+                    <ul>
+                        <li><label for="game-title">Title</label><input id="game-title" class="setting" type="text" /></li>
+                        <li><label for="game-subtitle">Subtitle</label><input id="game-subtitle" class="setting" type="text" /></li>
+                        <li><label for="game-titleDelay">Title Delay</label><input id="game-titleDelay" class="setting" type="text" /></li>
+                    </ul>
+                </div>
 
-            Player Actions
-            <ul>
-                <li>Left: <span class="pill">prevFrame<a href='#' class='close'>&times;</a></span> <span class="pill">moveLeft<a href='#' class='close'>&times;</a></span></li>
-            </ul>
+                <div id="tab-level-settings" class="tab">
+                    <h4>Level</h4>
+                    <ul>
+                        <li><label for="level-title">Title</label><input id="level-title" class="setting" type="text" /></li>
+                        <li><label for="level-description">Description</label><input id="level-description" class="setting" type="text" /></li>
+                        <li><label for="level-music">Music</label><input id="level-music" class="setting" type="text" /></li>
+                        <li><label for="level-backgroundType">Background Type</label><input id="level-backgroundType" class="setting" type="text" /></li>
+                        <li><label for="level-progressionType">Progression Type</label><input id="level-progressionType" class="setting" type="text" /></li>
+                        <li><label for="level-progressionValue">Progression Value</label><input id="level-progressionValue" class="setting" type="text" /></li>
+                    </ul>
+                </div>
+
+                <div id="tab-player-actions" class="tab">
+                    <h4>Player Actions</h4>
+                    <ul>
+                        <li>Left: <span class="pill">prevFrame<a href='#' class='close'>&times;</a></span> <span class="pill">moveLeft<a href='#' class='close'>&times;</a></span></li>
+                    </ul>
+                </div>
+            </div><!-- .tab-containers -->
         </div>
 
         <div id="sprite-container">
