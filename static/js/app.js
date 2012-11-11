@@ -42,12 +42,20 @@ window.addEventListener('load', function() {
                 function() { var el = $('#game-title'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/game/title', this.value); }; }
           , 'game/subtitle':
                 function() { var el = $('#game-subtitle'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/game/subtitle', this.value); }; }
+          , 'game/titleDelay':
+                function() { var el = $('#game-titleDelay'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/game/titleDelay', this.value); }; }
           , 'level/title':
                 function() { var el = $('#level-title'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/level/title', this.value); }; }
           , 'level/description':
                 function() { var el = $('#level-description'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/level/description', this.value); }; }
           , 'level/music':
                 function() { var el = $('#level-music'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/level/music', this.value); }; }
+          , 'level/backgroundType':
+                function() { var el = $('#level-backgroundType'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/level/backgroundType', this.value); }; }
+          , 'level/progressionType':
+                function() { var el = $('#level-progressionType'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/level/progressionType', this.value); }; }
+          , 'level/progressionValue':
+                function() { var el = $('#level-progressionValue'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/level/progressionValue', this.value); }; }
         }
       , settingsInputs = $$('.setting')
     ;

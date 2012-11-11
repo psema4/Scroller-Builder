@@ -104,6 +104,14 @@ function GameEngine(opts) {
             }
 
             if (engine.state == 'level-playing') sprites.drawSprites(ctx);
+
+            if (gameData && gameData.levels && gameData.levels[level] && gameData.levels[level].progressionType == 'ticks') {
+                var levelLengthTicks = gameData.levels[level].progressionValue
+                  , endOfLevelTicks  = engine.levelStartTicks + levelLengthTicks
+                ;
+
+                if (ticks >= endOfLevelTicks) nextLevel();
+            }
         }
 
       , clearScreen = function() {
@@ -201,11 +209,15 @@ function GameEngine(opts) {
                 });
 
                 //publish game settings for panel
-                pubsub.publish('game/title',        gameData.title);
-                pubsub.publish('game/subtitle',     gameData.subtitle);
-                pubsub.publish('level/title',       gameData.levels[level].title);
-                pubsub.publish('level/description', gameData.levels[level].description);
-                pubsub.publish('level/music',       gameData.levels[level].music);
+                pubsub.publish('game/title',                   gameData.title);
+                pubsub.publish('game/subtitle',                gameData.subtitle);
+                pubsub.publish('game/titleDelay',              gameData.titleDelay);
+                pubsub.publish('level/title',                  gameData.levels[level].title);
+                pubsub.publish('level/description',            gameData.levels[level].description);
+                pubsub.publish('level/music',                  gameData.levels[level].music);
+                pubsub.publish('level/backgroundType',         gameData.levels[level].backgroundType);
+                pubsub.publish('level/progressionType',        gameData.levels[level].progressionType);
+                pubsub.publish('level/progressionValue',       gameData.levels[level].progressionValue);
 
                 engine.state = 'loaded';
                 if (cb && typeof(cb) == 'function') cb(gameData);
@@ -242,10 +254,13 @@ function GameEngine(opts) {
                 }
 
                 // publish engine & level updates
-                pubsub.publish('engine/level', (level+1));
-                pubsub.publish('level/title',       gameData.levels[level].title);
-                pubsub.publish('level/description', gameData.levels[level].description);
-                pubsub.publish('level/music',       gameData.levels[level].music);
+                pubsub.publish('engine/level',                 (level+1));
+                pubsub.publish('level/title',                  gameData.levels[level].title);
+                pubsub.publish('level/description',            gameData.levels[level].description);
+                pubsub.publish('level/music',                  gameData.levels[level].music);
+                pubsub.publish('level/backroundType',          gameData.levels[level].backgroundType);
+                pubsub.publish('level/progressionType',        gameData.levels[level].progressionType);
+                pubsub.publish('level/progressionValue',       gameData.levels[level].progressionValue);
             }
         }
 
@@ -359,12 +374,16 @@ function GameEngine(opts) {
     pubsub.publish('engine/level', (level+1));
 
     // subscribe to changes from panel
-    pubsub.subscribe('set/game/title', function(topic, v) { gameData.title = v; }); 
-    pubsub.subscribe('set/game/subtitle', function(topic, v) { gameData.subtitle = v; }); 
+    pubsub.subscribe('set/game/title',             function(topic, v) { gameData.title = v; }); 
+    pubsub.subscribe('set/game/subtitle',          function(topic, v) { gameData.subtitle = v; }); 
+    pubsub.subscribe('set/game/titleDelay',        function(topic, v) { gameData.titleDelay = v; }); 
 
-    pubsub.subscribe('set/level/title', function(topic, v) { gameData.levels[level].title = v; }); 
-    pubsub.subscribe('set/level/description', function(topic, v) { gameData.levels[level].description = v; }); 
-    pubsub.subscribe('set/level/music', function(topic, v) { gameData.levels[level].music = v; }); 
+    pubsub.subscribe('set/level/title',            function(topic, v) { gameData.levels[level].title = v; }); 
+    pubsub.subscribe('set/level/description',      function(topic, v) { gameData.levels[level].description = v; }); 
+    pubsub.subscribe('set/level/music',            function(topic, v) { gameData.levels[level].music = v; }); 
+    pubsub.subscribe('set/level/backgroundType',   function(topic, v) { gameData.levels[level].backgroundType = v; }); 
+    pubsub.subscribe('set/level/progressionType',  function(topic, v) { gameData.levels[level].progressionType = v; }); 
+    pubsub.subscribe('set/level/progressionValue', function(topic, v) { gameData.levels[level].progressionValue = v; }); 
 
     // public api
     return {
