@@ -48,6 +48,7 @@ function GameEngine(opts) {
         }
 
       , startTicking = function() {
+            if (isTicking) return;
             isTicking = true;
             update();
         }
