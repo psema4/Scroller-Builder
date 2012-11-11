@@ -23,10 +23,7 @@ function GameEngine(opts) {
       , engine = {
             state: 'loading'
         }
-/*
-      , $ = function(sel) { return document.querySelector(sel); }
-      , $$ = function(sel) { return document.querySelectorAll(sel); }
-*/
+
       , logger = function() { console.log('GameEngine', arguments); }
 
       , getCtx = function() {
