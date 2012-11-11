@@ -243,6 +243,51 @@ function GameEngine(opts) {
       , getLevelData = function() { return gameData.levels[level]; }
 
       , getEngineState = function() { return engine; }
+
+      , playerEventStart = function(evt) {
+            var key = evt.keyCode
+              , sprite = sprites.queue[0]
+              , levelData = gameData.levels[level]
+
+              , leftActions    = levelData.actions.left
+              , rightActions   = levelData.actions.right
+              , forwardActions = levelData.actions.forward
+              , backActions    = levelData.actions.back
+              , firefactions   = levelData.actions.fire
+            ;
+
+            switch(key) {
+                case 37:
+                    // left action
+                    for (var i=0; i< leftActions.length; i++) { try { sprite[leftActions[i]]() } catch(e) { logger('leftActions['+i+']', leftActions[i], e); } };
+                    break;
+
+                case 39:
+                    // right action
+                    for (var i=0; i< rightActions.length; i++) { try { sprite[rightActions[i]]() } catch(e) { logger('bad sprite command, rightAction', e); } };
+                    break;
+
+                case 38:
+                    // up action
+                    for (var i=0; i< forwardActions.length; i++) { try { sprite[forwardActions[i]]() } catch(e) { logger('forwardActions['+i+']', forwardActions[i], e); } };
+                    break;
+
+                case 40:
+                    // down action
+                    for (var i=0; i< backActions.length; i++) { try { sprite[backActions[i]]() } catch(e) { logger('backActions['+i+']', backActions[i], e); } };
+                    break;
+
+                case 32:
+                    // fire action
+                    for (var i=0; i< fireActions.length; i++) { try { sprite[fireActions[i]]() } catch(e) { logger('fireActions['+i+']', fireActions[i], e); } };
+                    break;
+
+                default:
+            }
+        }
+
+      , playerEventStop = function(evt) {
+        }
     ;
 
     // Constructor
@@ -287,6 +332,9 @@ function GameEngine(opts) {
       , nextLevel: nextLevel
       , getLevelData: getLevelData
       , audio: audio
+      , sprites: sprites
       , getEngineState: getEngineState
+      , playerEventStart: playerEventStart
+      , playerEventStop: playerEventStop
     };
 }

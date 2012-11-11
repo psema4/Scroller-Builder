@@ -61,6 +61,13 @@ window.addEventListener('load', function() {
     window.game = new GameEngine();
 
     game.loadGame('game.json', function(gameData) {
-        console.log('loaded game file', gameData);
+        /* attach player inputs */
+        window.addEventListener('keydown', function(evt) {
+            game.playerEventStart(evt);
+        });
+
+        window.addEventListener('keyup', function(evt) {
+            game.playerEventStop(evt);
+        });
     });
 });

@@ -6,27 +6,47 @@
     ],
     "playerStartData": {
         "lives": 3,
-        "rateOfFire": 1,
-        "x": 0,
-        "y": 0
+        "rateOfFire": 1
     },
     "titleDelay": 200,
     "levels":   [
         {
-            "title":       "Level 1",
-            "description": "Go!",
-            "music":       "/assets/music/level1.mp3",
+            "title":          "Level 1",
+            "description":    "Go!",
+            "music":          "/assets/music/level1.mp3",
             "backgroundType": "stars",
-            "spritesheet": "/assets/img/spaceArt.png",
+
+            "actions": {
+                "left":     [ "prevFrame", "moveLeft" ],
+                "right":    [ "nextFrame", "moveRight" ],
+                "forward":  [ "moveForward" ],
+                "back":     [ "moveBack" ],
+                "fire":     [ "fire" ]
+            },
+
+            "spritesheet":    "/assets/img/spaceArt.png",
             "sprites": {
                 "player": {
-                    "startx": 265,
-                    "starty": 380,
+                    "startx":     265,
+                    "starty":     380,
+                    "speed":      5,
+                    "animate":    false,
+                    "startFrame": 1,
                     "frames": [
                         {
+                            "srcx": 273,
+                            "srcy": 363,
+                            "srcw": 100,
+                            "srch": 90
+                        }, {
                             "srcx": 371,
                             "srcy": 363,
                             "srcw": 110,
+                            "srch": 90
+                        }, {
+                            "srcx": 480,
+                            "srcy": 363,
+                            "srcw": 100,
                             "srch": 90
                         }
                     ]
@@ -34,11 +54,11 @@
             },
             "waves": [
                 {
-                    "sprite": "/assets/img/sprite1.png",
+                    "sprite": "enemy1",
                     "class": 1,
                     "at": 5
                 }, {
-                    "sprite": "/assets/img/sprite1.png",
+                    "sprite": "enemy1",
                     "class": 1,
                     "at": 10
                 }
@@ -53,23 +73,37 @@
             "spritesheet": "/assets/img/spaceArt.png",
             "sprites": {
                 "player": {
+                    "startx":     265,
+                    "starty":     380,
+                    "animate":    "false",
+                    "startFrame": 0,
                     "frames": [
                         {
-                            "srcx": 0,
-                            "srcy": 0,
-                            "srcw": 64,
-                            "srch": 64
+                            "srcx": 371,
+                            "srcy": 363,
+                            "srcw": 110,
+                            "srch": 90
+                        }, {
+                            "srcx": 371,
+                            "srcy": 363,
+                            "srcw": 110,
+                            "srch": 90
+                        }, {
+                            "srcx": 371,
+                            "srcy": 363,
+                            "srcw": 110,
+                            "srch": 90
                         }
                     ]
                 }
             },
             "waves": [
                 {
-                    "sprite": "/assets/img/sprite1.png",
+                    "sprite": "enemy1",
                     "class": 1,
                     "at": 5
                 }, {
-                    "sprite": "/assets/img/sprite1.png",
+                    "sprite": "enemy1",
                     "class": 1,
                     "at": 10
                 }
