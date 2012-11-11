@@ -8,9 +8,9 @@
         "lives": 3,
         "rateOfFire": 1
     },
-    "titleDelay": 200,
     "levels":   [
         {
+            "titleDelay":       200,
             "title":            "Level 1",
             "description":      "Go!",
             "music":            "/assets/music/level1.mp3",
@@ -235,6 +235,7 @@
         },
 
         {
+            "titleDelay":       200,
             "title":            "Level 2",
             "description":      "Survive!",
             "music":            "/assets/music/level2.mp3",

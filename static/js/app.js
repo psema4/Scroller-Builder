@@ -36,8 +36,7 @@ window.addEventListener('load', function() {
             var tabs = $$('.tab');
 
             [].forEach.call(tabs, function(t) {
-                t.style.visibility = 'hidden';
-                if (t.id == targetTab) t.style.visibility = 'visible';
+                t.style.visibility = (t.id == targetTab) ? 'visible' : 'hidden';
             });
         }
     };
@@ -55,8 +54,8 @@ window.addEventListener('load', function() {
                 function() { var el = $('#game-title'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/game/title', this.value); }; }
           , 'game/subtitle':
                 function() { var el = $('#game-subtitle'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/game/subtitle', this.value); }; }
-          , 'game/titleDelay':
-                function() { var el = $('#game-titleDelay'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/game/titleDelay', this.value); }; }
+          , 'level/titleDelay':
+                function() { var el = $('#level-titleDelay'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/level/titleDelay', this.value); }; }
           , 'level/title':
                 function() { var el = $('#level-title'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/level/title', this.value); }; }
           , 'level/description':

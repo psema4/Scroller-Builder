@@ -96,7 +96,9 @@ function GameEngine(opts) {
             }
 
             if (engine.state == 'level-title') {
-                if (ticks - engine.levelStartTicks > gameData.titleDelay) {
+                if (! gameData && gameData.levels) return;
+
+                if (ticks - engine.levelStartTicks > gameData.levels[level].titleDelay) {
                     engine.state = 'level-playing';
                 } else {
                     drawTitles();
@@ -250,7 +252,7 @@ try {
                 //publish game settings for panel
                 pubsub.publish('game/title',                   gameData.title);
                 pubsub.publish('game/subtitle',                gameData.subtitle);
-                pubsub.publish('game/titleDelay',              gameData.titleDelay);
+                pubsub.publish('level/titleDelay',             gameData.levels[level].titleDelay);
                 pubsub.publish('level/title',                  gameData.levels[level].title);
                 pubsub.publish('level/description',            gameData.levels[level].description);
                 pubsub.publish('level/music',                  gameData.levels[level].music);
