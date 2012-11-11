@@ -114,12 +114,17 @@ function GameEngine(opts) {
                     if (ticks >= endOfLevelTicks) nextLevel();
 
                 } else if (gameData.levels[level].progressionType == 'score') {
+//FIXME
+// getInfo failing below after a few loops through both test levels (nextLevel() issue?)
+// ALSO: executing nextLevel() 5 times, spritesheet will appear... um... why?
+try {
                     var targetScore  = gameData.levels[level].progressionValue
                       , spriteData   = sprites.queue[0].getInfo()
                       , currentScore = spriteData.score
                     ;
 
                     if (currentScore >= targetScore) nextLevel();
+} catch(e) {}
                 }
             }
 
@@ -279,6 +284,8 @@ function GameEngine(opts) {
                   , audioEl = $('#'+musicName)
                 ;
 
+                var oldPlayerSprite = sprites.queue[0]; // keep a copy of the old player so we can grab the current score
+
                 sprites.removeAll();
                 sprites.loadSpritesheet(spritesheetName, gameData.levels[level].spritesheet, function() {
                     var playerSpriteData     = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.player)
@@ -296,6 +303,8 @@ function GameEngine(opts) {
                       , obstacle2SpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.obstacle2)
 */
                     ;
+
+                    sprites.queue[0].setScore(oldPlayerSprite.getInfo().score); // carry the current score forward
                 });
 
                 if (audioEl) {
