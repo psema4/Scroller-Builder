@@ -18,6 +18,7 @@ function GameEngine(opts) {
       , level = 0
       , audio = new AudioEngine()
       , sprites = new SpriteManager()
+      , prevFrame
 
       , engine = {
             state: 'loading'
@@ -48,12 +49,14 @@ function GameEngine(opts) {
         }
 
       , startTicking = function() {
+            if (isTicking) return;
             isTicking = true;
             update();
         }
 
       , stopTicking = function() {
             isTicking = false;
+            window.webkitCancelAnimationFrame(prevFrame);
         }
 
       , checkTicking = function() {
@@ -75,7 +78,7 @@ function GameEngine(opts) {
         }
 
       , update = function() {
-            if (isTicking) requestAnimationFrame(update);
+            if (isTicking) prevFrame = requestAnimationFrame(update);
 
             ticks += 1 * tickDirection;
             if (ticks < 0) { tickDirection = 1; stopTicking(); }
@@ -241,6 +244,7 @@ function GameEngine(opts) {
         }
 
       , getLevelData = function() { return gameData.levels[level]; }
+      , getLevel = function() { return level; }
 
       , getEngineState = function() { return engine; }
 
@@ -331,6 +335,7 @@ function GameEngine(opts) {
       , getGameData: getGameData
       , nextLevel: nextLevel
       , getLevelData: getLevelData
+      , getLevel: getLevel
       , audio: audio
       , sprites: sprites
       , getEngineState: getEngineState

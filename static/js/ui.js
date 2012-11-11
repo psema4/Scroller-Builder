@@ -51,12 +51,14 @@
  			this.innerHTML = '| |';
  			game.startTicking();
  			this.paused = false;
+ 			$('#level-' + game.getLevel() + '-music').play();
  		}
  		else
  		{
  			this.innerHTML = '►';
  			game.stopTicking();
  			this.paused = true;
+ 			$('#level-' + game.getLevel() + '-music').pause();
  		}
  		tick_slider.setValue(0);
  	};
