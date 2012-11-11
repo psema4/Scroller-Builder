@@ -147,16 +147,19 @@
  		if (set !== dir) game.setTickDirection(dir = set);
  	});
 
- 	function open_popin (x, y, html) {
+ 	function open_popin (x, y, html, init) {
  		var popin = document.createElement('div');
  		add(popin, 'pop-in');
  		popin.innerHTML = "<a href='#' class='close'>&times;</a>" + html;
  		document.body.appendChild(popin);
  		popin.style.top = y + 'px';
- 		popin.style.left = x - popin.offsetWidth + 15 + 'px';
+ 		popin.style.left = x + 'px';
  		setTimeout(add, 100, popin, 'shown');
+ 		if (init) init(popin);
  		return popin;
  	}
+
+ 	window.open_popin = open_popin
 
  	// Open popups for editing objects if the game isn't running
  	$('#game-screen').onclick = function (e) {
@@ -172,7 +175,7 @@
 
  			if (elem = $('#config-' + i)) {
  				add(elem, 'shown');
- 				elem.style.left = left_ + info.x - elem.offsetWidth + 15 + 'px';
+ 				elem.style.left = left_ + info.x + 'px';
  				elem.style.top = top_ + info.y + 'px';
  			}
  			else
@@ -183,6 +186,18 @@
 	 		}
  			return;
  		}
+ 	}
+
+ 	var f = new FileDialog('audio');
+ 	f.add(new File({name: 'level1.mp3', url: '/assets/music/level1.mp3', local: false}));
+ 	f.add(new File({name: 'level2.mp3', url: '/assets/music/level2.mp3', local: false}));
+
+ 	$('#level-music-fake').onfocus = function () {
+ 		f.open(left(this), top(this));
+ 	}
+
+ 	$('#level-music-fake').onblur = function () {
+ 		f.close();
  	}
 
  } ());

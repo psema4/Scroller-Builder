@@ -147,6 +147,33 @@ input {
 	top: 0;
 }
 
+/* - List */
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.list li {
+    cursor: pointer;
+    -webkit-transition: background-color .3s;
+    border-radius: 4px;
+    display: block;
+    padding: 2px;
+    background: #EFEFEF;
+    margin: 3px;
+}
+
+.list .add {
+    color: #707070;
+    cursor: default;
+    border: 2px dashed #808080;
+}
+
+.list li:hover {
+    background: #DEDEDE;
+}
+
 /* Tools Panel */
 #tools-container {
     position: absolute;

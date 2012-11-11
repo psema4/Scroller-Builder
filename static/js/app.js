@@ -74,7 +74,7 @@ window.addEventListener('load', function() {
           , 'level/description':
                 function() { var el = $('#level-description'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/level/description', this.value); }; }
           , 'level/music':
-                function() { var el = $('#level-music'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/level/music', this.value); }; }
+                function() { var el = $('#level-music'), el2 = $('#level-music-fake'); el.value = arguments[1]; el2.value = arguments[1].split('/').slice(-1)[0];  el.onchange = function() { el2.value = this.value.split('/').slice(-1)[0]; pubsub.publish('set/level/music', this.value); }; }
           , 'level/backgroundType':
                 function() { var el = $('#level-backgroundType'); el.value = arguments[1]; el.onchange = function() { pubsub.publish('set/level/backgroundType', this.value); }; }
           , 'level/progressionType':

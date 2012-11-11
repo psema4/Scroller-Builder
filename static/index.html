@@ -4,6 +4,7 @@
         <title></title>
         <link rel="stylesheet" href="css/app.css" />
         <script src="js/vendor/pubsub.js"></script>
+        <script src="js/asset.js"></script>
         <script src="js/sprite.js"></script>
         <script src="js/audio.js"></script>
         <script src="js/game.js"></script>
@@ -100,11 +101,19 @@
                     <ul>
                         <li><label for="level-title">Title</label><input id="level-title" class="setting" type="text" /></li>
                         <li><label for="level-description">Description</label><input id="level-description" class="setting" type="text" /></li>
-                        <li><label for="level-titleDelay">Title Delay</label><input id="level-titleDelay" class="setting" type="text" /></li>
-                        <li><label for="level-music">Music</label><input id="level-music" class="setting" type="text" /></li>
-                        <li><label for="level-backgroundType">Background Type</label><input id="level-backgroundType" class="setting" type="text" /></li>
-                        <li><label for="level-progressionType">Progression Type</label><input id="level-progressionType" class="setting" type="text" /></li>
-                        <li><label for="level-progressionValue">Progression Value</label><input id="level-progressionValue" class="setting" type="text" /></li>
+                        <li><label for="level-titleDelay">Title Delay</label><input id="level-titleDelay" class="setting" type="number" /></li>
+                        <li><label for="level-music">Music</label><input id="level-music-fake" class="setting" type="text" /><input id="level-music" class="setting" type="hidden" /></li>
+                        <li><label for="level-backgroundType">Background Type</label>
+                            <select id="level-backgroundType" class="setting">
+                                <option value="stars">Stars</option>
+                            </select>
+                        <li><label for="level-progressionType">Progression Type</label>
+                            <select id="level-progressionType" class="setting">
+                                <option value="ticks">Ticks</option>
+                                <option value="score">Score</option>
+                            </select>
+                        </li>
+                        <li><label for="level-progressionValue">Progression Value</label><input id="level-progressionValue" class="setting" type="number" /></li>
                     </ul>
                 </div>
 
