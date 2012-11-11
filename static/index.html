@@ -27,7 +27,9 @@
 
         <div id="game-container">
             <canvas id="game-screen" width="640" height="480">Canvas support not found.</canvas>
-            <br><a class="btn" id="play_pause_btn">| |</a> <div class=slider id="tick_slider"><div class="btn"></div></div><a class="btn" id="next_lvl_btn">►►</a>
+            <div id="game-slider">
+                <a class="btn" id="play_pause_btn">| |</a> <div class=slider id="tick_slider"><div class="btn"></div></div><a class="btn" id="next_lvl_btn">►►</a>
+            </div>
         </div>
 
         <div id="tools-container">
@@ -42,28 +44,28 @@
                 <div id="tab-tools1" class="tab2">
                     <h4>Tools 1</h4>
                     <div class="toolbox">
-                        <img width="64" height="64" alt="tool 0" />
-                        <img width="64" height="64" alt="tool 1" />
-                        <img width="64" height="64" alt="tool 2" />
-                        <img width="64" height="64" alt="tool 3" />
-                        <img width="64" height="64" alt="tool 4" />
-                        <img width="64" height="64" alt="tool 5" />
-                        <img width="64" height="64" alt="tool 6" />
-                        <img width="64" height="64" alt="tool 7" />
+                        <img width="64" height="64" alt="tool 0" draggable="true" />
+                        <img width="64" height="64" alt="tool 1" draggable="true" />
+                        <img width="64" height="64" alt="tool 2" draggable="true" />
+                        <img width="64" height="64" alt="tool 3" draggable="true" />
+                        <img width="64" height="64" alt="tool 4" draggable="true" />
+                        <img width="64" height="64" alt="tool 5" draggable="true" />
+                        <img width="64" height="64" alt="tool 6" draggable="true" />
+                        <img width="64" height="64" alt="tool 7" draggable="true" />
                     </div>
                 </div>
 
                 <div id="tab-tools2" class="tab2">
                     <h4>Tools 2</h4>
                     <div class="toolbox">
-                        <img width="64" height="64" alt="tool 8" />
-                        <img width="64" height="64" alt="tool 9" />
-                        <img width="64" height="64" alt="tool 10" />
-                        <img width="64" height="64" alt="tool 11" />
-                        <img width="64" height="64" alt="tool 12" />
-                        <img width="64" height="64" alt="tool 13" />
-                        <img width="64" height="64" alt="tool 14" />
-                        <img width="64" height="64" alt="tool 15" />
+                        <img width="64" height="64" alt="tool 8" draggable="true" />
+                        <img width="64" height="64" alt="tool 9" draggable="true" />
+                        <img width="64" height="64" alt="tool 10" draggable="true" />
+                        <img width="64" height="64" alt="tool 11" draggable="true" />
+                        <img width="64" height="64" alt="tool 12" draggable="true" />
+                        <img width="64" height="64" alt="tool 13" draggable="true" />
+                        <img width="64" height="64" alt="tool 14" draggable="true" />
+                        <img width="64" height="64" alt="tool 15" draggable="true" />
                     </div>
                 </div>
             </div>
@@ -93,6 +95,9 @@
                     <ul>
                         <li><label for="game-title">Title</label><input id="game-title" class="setting" type="text" /></li>
                         <li><label for="game-subtitle">Subtitle</label><input id="game-subtitle" class="setting" type="text" /></li>
+                        <li align="center"><br>Game.json</li>
+                        <li align="center"><button id="export">Show</button> <button onclick="$('#export-out').style.visibility='hidden';">Hide</button></li>
+                        <li align="center"><textarea id="export-out" readonly></textarea></li>
                     </ul>
                 </div>
 
@@ -105,6 +110,7 @@
                         <li><label for="level-music">Music</label><input id="level-music-fake" class="setting" type="text" /><input id="level-music" class="setting" type="hidden" /></li>
                         <li><label for="level-backgroundType">Background Type</label>
                             <select id="level-backgroundType" class="setting">
+                                <option value="none">No Background</option>
                                 <option value="stars">Stars</option>
                             </select>
                         <li><label for="level-progressionType">Progression Type</label>

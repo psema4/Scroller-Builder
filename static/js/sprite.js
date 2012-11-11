@@ -7,6 +7,7 @@ function Sprite(opts) {
     opts = opts || {};
 
     var spritesheet = opts.spritesheet
+      , name = opts.name || 'newsprite'
       , frame = opts.startFrame || 0
       , defFrame = opts.startFrame || 0
       , frames = opts.frames || []
@@ -19,6 +20,8 @@ function Sprite(opts) {
       , value = opts.value || 0
       , x = opts.startx || 0
       , y = opts.starty || 0
+      , dx = opts.dx || 0
+      , dy = opts.dy || 0
       , _img = new Image()
 
       , saveAsImage = function() {
@@ -54,6 +57,12 @@ function Sprite(opts) {
               , w = frames[frame].srcw
               , h = frames[frame].srch
             ;
+
+            // update movement
+            x += dx * speed
+            y += dy * speed
+
+            if (y > 480) speed = 0; // destroy
 
             ctx.drawImage( srcEl,
                 frames[frame].srcx, frames[frame].srcy, w, h,

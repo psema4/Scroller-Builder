@@ -105,7 +105,24 @@ function GameEngine(opts) {
                 }
             }
 
-            if (engine.state == 'level-playing') sprites.drawSprites(ctx);
+            if (engine.state == 'level-playing') {
+                // spawn waves
+                var waves = gameData.levels[level].waves;
+
+                for (var i=0; i<waves.length; i++) {
+                    if (ticks == engine.levelStartTicks + waves[i].at) {
+                        //FIXME: spawn here
+                        var spritesheetName = 'level-'+ level +'-sprites'
+                          , sprite = sprites.addSprite(spritesheetName, gameData.levels[level].sprites[waves[i].sprite])
+                        ;
+var x = Math.floor(Math.random() * 640);
+console.log(x);
+                        sprite.moveTo(x,0);
+                    }
+                }
+
+                sprites.drawSprites(ctx);
+            }
 
             if (gameData && gameData.levels && gameData.levels[level]) {
                 if (gameData.levels[level].progressionType == 'ticks') {
@@ -330,6 +347,20 @@ try {
       , getLevelData = function() { return gameData.levels[level]; }
       , getLevel = function() { return level; }
 
+      , addWaveToLevel = function(spriteIndex) {
+            var time = ticks
+              , levelData = gameData.levels[level]
+              , waveData = {
+                    sprite: sprites.queue[spriteIndex].name
+                  , class: 1
+                  , at: time
+                }
+            ;
+
+            console.log('create waveData', waveData);
+            levelData.waves.push(waveData);
+        }
+
       , getEngineState = function() { return engine; }
 
       , playerEventStart = function(evt) {
@@ -467,5 +498,6 @@ try {
       , getEngineState: getEngineState
       , playerEventStart: playerEventStart
       , playerEventStop: playerEventStop
+      , addWaveToLevel: addWaveToLevel
     };
 }

@@ -318,11 +318,22 @@ input.setting {
     right: 0px;
     bottom: 0px;
     text-align: center;
+    min-width: 800px;
 }
+
 #game-screen {
+    position: absolute;
+    top: 0px;
+    left: 0px;
     width: 640px;
     height: 480px;
     background-color: #000;
+}
+
+#game-slider {
+    position: absolute;
+    top: 480px;
+    left: 0px;
 }
 
 #sprite-container {
@@ -332,4 +343,14 @@ input.setting {
 /* Audio */
 #audio-container {
     display: none;
+}
+
+/* Misc */
+#export-out {
+    margin: 4px;
+    border: 2px solid #404040;
+    border-radius: 4px;
+    width: 80%;
+    min-height: 200px;
+    visibility: hidden;
 }

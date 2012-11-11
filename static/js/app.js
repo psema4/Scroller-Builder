@@ -29,6 +29,20 @@ function $(sel) { return document.querySelector(sel); }
 function $$(sel) { return document.querySelectorAll(sel); }
 
 window.addEventListener('load', function() {
+    // center game screen & slider
+    var canvasEl = $('#game-screen')
+        sliderEl = $('#game-slider')
+        w = window.innerWidth
+        x = (w/2)-320
+        y = 0
+    ;
+
+    if (x < 0) x = 0;
+
+    canvasEl.style.top = y+'px';
+    canvasEl.style.left = x+'px';
+    sliderEl.style.top = y+480+'px';
+    sliderEl.style.left = x+10+'px';
 
     // Tool panel tab controller
     window.tltabs = {
@@ -90,6 +104,16 @@ window.addEventListener('load', function() {
         subscriptions.push(pubsub.subscribe(topic, handlers[topic]));
     });
 
+    // Export
+    $('#export').addEventListener('click', function() {
+        var data = game.getGameData()
+          , exportOutEl = $('#export-out')
+        ;
+
+        exportOutEl.value = JSON.stringify(data);
+        exportOutEl.style.visibility = 'visible';
+    });
+
     // Engine startup
     window.game = new GameEngine();
 
@@ -112,10 +136,46 @@ window.addEventListener('load', function() {
                 });
 
                 for (var i=0; i<numSprites; i++) {
-                    $(selPrefix + i + selPostfix).src = game.sprites.queue[i].getDataURL()
-                    $(selPrefix + i + selPostfix).style.visibility = 'visible';
+                    var sel = selPrefix + i + selPostfix;
+                    $(sel).src = game.sprites.queue[i].getDataURL()
+                    $(sel).style.visibility = 'visible';
+
+                    // setup drag operations
+                    // drops on canvas should set sprites x coordinate, y always starts at 0
+                    $(sel).addEventListener('dragstart', function(evt) {
+                        //console.log('dragstart on ', this.alt, evt.screenX, evt.screenY, evt);
+                        evt.dataTransfer.effectAllowed = 'move';
+
+                        var evtData = 'dragData';
+                        //console.log('starting drag with data:', evtData);
+                        evt.dataTransfer.setData('text/plain', evtData);
+                    }, false);
+
+                    $(sel).addEventListener('dragend', function(evt) {
+                        //console.log('dragend on ', this.alt, evt.screenX, evt.screenY, evt);
+                        var screenX1 = parseInt(window.getComputedStyle($('#game-screen')).left)
+                          , screenY1 = parseInt(window.getComputedStyle($('#game-screen')).top)
+                          , screenX2 = screenX1+640
+                          , screenY2 = screenY1+480
+                          , x = evt.screenX
+                          , y = evt.screenY
+                        ;
+
+                        if (x > screenX1 && x < screenX2) {
+                            if (y > screenY1 && y < screenY2) {
+                                var spriteId = this.alt.replace(/^tool /, '');
+                                game.addWaveToLevel(spriteId);
+                            }
+                        }
+
+                    }, false);
+
+                    $('#game-screen').addEventListener('drop', function(evt) {
+                        console.log('drop');
+                    }, false);
                 }
             }
+
         };
 
         setTimeout(toolboxSetup, 2000);

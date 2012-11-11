@@ -37,6 +37,7 @@
             "spritesheet":    "/assets/img/spaceArt.png",
             "sprites": {
                 "player": {
+                    "name": "player",
                     "startx":     265,
                     "starty":     380,
                     "speed":      5,
@@ -65,8 +66,11 @@
                 },
 
                 "enemy1": {
-                    "startx":     0,
+                    "name": "enemy1",
+                    "startx":     -100,
                     "starty":     0,
+                    "dx": 0,
+                    "dy": 1,
                     "speed":      5,
                     "rotation":   0,
                     "animate":    false,
@@ -83,8 +87,9 @@
                 },
 
                 "enemy2": {
-                    "startx":     120,
-                    "starty":     0,
+                    "name": "enemy2",
+                    "startx":     -120,
+                    "starty":     -0,
                     "speed":      5,
                     "rotation":   0,
                     "animate":    false,
@@ -101,8 +106,9 @@
                 },
 
                 "playerFire": {
-                    "startx":     250,
-                    "starty":     64,
+                    "name": "playerFire",
+                    "startx":     -250,
+                    "starty":     -64,
                     "speed":      15,
                     "rotation":   0,
                     "animate":    false,
@@ -118,8 +124,9 @@
                 },
 
                 "playerHit": {
-                    "startx":     230,
-                    "starty":     20,
+                    "name": "playerHit",
+                    "startx":     -230,
+                    "starty":     -20,
                     "speed":      0,
                     "rotation":   0,
                     "animate":    false,
@@ -135,8 +142,9 @@
                 },
 
                 "enemyFire": {
-                    "startx":     290,
-                    "starty":     40,
+                    "name": "enemyFire",
+                    "startx":     -290,
+                    "starty":     -40,
                     "speed":      15,
                     "rotation":   0,
                     "animate":    false,
@@ -152,8 +160,9 @@
                 },
 
                 "enemyHit": {
-                    "startx":     270,
-                    "starty":     64,
+                    "name": "enemyHit",
+                    "startx":     -270,
+                    "starty":     -64,
                     "speed":      0,
                     "rotation":   0,
                     "animate":    false,
@@ -169,7 +178,8 @@
                 },
 
                 "playerLife": {
-                    "startx":     340,
+                    "name": "playerLife",
+                    "startx":     -340,
                     "starty":     30,
                     "speed":      0,
                     "rotation":   0,
@@ -186,7 +196,8 @@
                 },
 
                 "obstacle1": {
-                    "startx":     400,
+                    "name": "obstacle1",
+                    "startx":     -400,
                     "starty":     0,
                     "speed":      0,
                     "rotation":   0,
@@ -204,7 +215,8 @@
                 },
 
                 "obstacle2": {
-                    "startx":     470,
+                    "name": "obstacle2",
+                    "startx":     -470,
                     "starty":     0,
                     "speed":      0,
                     "rotation":   0,
