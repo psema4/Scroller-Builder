@@ -299,14 +299,10 @@ input.setting {
 }
 
 #sprite-container {
-    position: absolute;
-    top: -1000px;
-    left: -1000px;
+    display: none;
 }
 
 /* Audio */
 #audio-container {
-    position: absolute;
-    top: -2000px;
-    left: -1000px;
+    display: none;
 }
