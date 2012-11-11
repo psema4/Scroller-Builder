@@ -105,13 +105,45 @@ function GameEngine(opts) {
 
             if (engine.state == 'level-playing') sprites.drawSprites(ctx);
 
-            if (gameData && gameData.levels && gameData.levels[level] && gameData.levels[level].progressionType == 'ticks') {
-                var levelLengthTicks = gameData.levels[level].progressionValue
-                  , endOfLevelTicks  = engine.levelStartTicks + levelLengthTicks
-                ;
+            if (gameData && gameData.levels && gameData.levels[level]) {
+                if (gameData.levels[level].progressionType == 'ticks') {
+                    var levelLengthTicks = gameData.levels[level].progressionValue
+                      , endOfLevelTicks  = engine.levelStartTicks + levelLengthTicks
+                    ;
 
-                if (ticks >= endOfLevelTicks) nextLevel();
+                    if (ticks >= endOfLevelTicks) nextLevel();
+
+                } else if (gameData.levels[level].progressionType == 'score') {
+                    var targetScore  = gameData.levels[level].progressionValue
+                      , spriteData   = sprites.queue[0].getInfo()
+                      , currentScore = spriteData.score
+                    ;
+
+                    if (currentScore >= targetScore) nextLevel();
+                }
             }
+
+            drawHud();
+        }
+
+      , drawHud = function() {
+            if (engine.state != 'level-playing')   return;
+            if (! (gameData && gameData.levels)) return;
+
+            var centeredX = parseInt(screen.width/2)
+              , centeredY = parseInt(screen.height/2)
+              , scoreX    = 10
+              , scoreY    = 24
+              , livesX    = screen.width - 90
+              , livesY    = 24
+            ;
+
+            ctx.textAlign = 'left';
+            ctx.font = '24px Ariel, sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,1.0)';
+            ctx.fillText('Score: ' + sprites.queue[0].getInfo().score, scoreX, scoreY);
+            ctx.fillText('Lives: ' + gameData.playerStartData.lives, livesX, livesY);
+
         }
 
       , clearScreen = function() {
@@ -188,17 +220,19 @@ function GameEngine(opts) {
 
                 sprites.loadSpritesheet(spritesheetName, gameData.levels[level].spritesheet, function() {
                     var playerSpriteData     = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.player)
+/*
                       , playerFireSpriteData = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerFire)
                       , playerHitSpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerHit)
-                      , playerLifeSpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerLife)
+                      , playerLifeSpriteData = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerLife)
 
                       , enemy1SpriteData     = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.enemy1)
                       , enemy2SpriteData     = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.enemy2)
                       , enemyFireSpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.enemyFire)
-                      , enemyHitSpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.enemyHit)
+                      , enemyHitSpriteData   = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.enemyHit)
 
                       , obstacle1SpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.obstacle1)
                       , obstacle2SpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.obstacle2)
+*/
                     ;
 
                     audio.loadMusic(musicName, gameData.levels[level].music, function() {
@@ -239,8 +273,31 @@ function GameEngine(opts) {
                 var tracks = $$('.music');
                 [].forEach.call(tracks, function(track) { track.currentTime=0; track.pause(); });
 
-                var musicName = 'level-' + level + '-music';
-                var audioEl = $('#'+musicName);
+                var namePrefix = musicName = 'level-' + level
+                  , musicName = namePrefix + '-music'
+                  , spritesheetName = namePrefix + '-sprites'
+                  , audioEl = $('#'+musicName)
+                ;
+
+                sprites.removeAll();
+                sprites.loadSpritesheet(spritesheetName, gameData.levels[level].spritesheet, function() {
+                    var playerSpriteData     = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.player)
+/*
+                      , playerFireSpriteData = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerFire)
+                      , playerHitSpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerHit)
+                      , playerLifeSpriteData = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.playerLife)
+
+                      , enemy1SpriteData     = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.enemy1)
+                      , enemy2SpriteData     = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.enemy2)
+                      , enemyFireSpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.enemyFire)
+                      , enemyHitSpriteData   = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.enemyHit)
+
+                      , obstacle1SpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.obstacle1)
+                      , obstacle2SpriteData  = sprites.addSprite(spritesheetName, gameData.levels[level].sprites.obstacle2)
+*/
+                    ;
+                });
+
                 if (audioEl) {
                     audioEl.play();
                     startTicking();

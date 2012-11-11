@@ -15,6 +15,8 @@ function Sprite(opts) {
       , lastAnimated = 0
       , speed = opts.speed || 1
       , rotation = opts.rotation || 0
+      , score = opts.score || 0
+      , value = opts.value || 0
       , x = opts.startx || 0
       , y = opts.starty || 0
 
@@ -86,12 +88,30 @@ function Sprite(opts) {
             logger('FIRE!');
         }
 
+      , setScore = function(v) {
+            score = v;
+        }
+
+      , incScore = function(v) {
+            score += v;
+        }
+
+      , setValue = function(v) {
+            value = v;
+        }
+
+      , incValue = function(v) {
+            value += v;
+        }
+
       , getInfo = function() {
             return {
                 animate: animate
               , frame: frame
               , speed: speed
               , rotation: rotation
+              , score: score
+              , value: value
               , x: x
               , y: y
               , w: frames[frame].srcw
@@ -113,6 +133,8 @@ function Sprite(opts) {
       , moveForward: moveForward
       , moveBack: moveBack
       , fire: fire
+      , setScore: setScore
+      , setValue: setValue
     };
 }
 
@@ -138,12 +160,17 @@ function SpriteManager(opts) {
       , addSprite = function(spritesheetName, data) {
             data.spritesheet = spritesheetName;
             queue.push(new Sprite(data));
+            return queue[queue.length-1];
         }
 
       , drawSprites = function(ctx) {
             for (var i=0; i<queue.length; i++) {
                 queue[i].draw(ctx);
             }
+        }
+
+      , removeAll = function() {
+            while (queue.length > 0) queue.pop();
         }
     ;
 
@@ -152,5 +179,6 @@ function SpriteManager(opts) {
       , loadSpritesheet: loadSpritesheet
       , addSprite: addSprite
       , queue: queue
+      , removeAll: removeAll
     };
 }
