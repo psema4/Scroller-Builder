@@ -257,7 +257,7 @@ function GameEngine(opts) {
               , rightActions   = levelData.actions.right
               , forwardActions = levelData.actions.forward
               , backActions    = levelData.actions.back
-              , firefactions   = levelData.actions.fire
+              , fireActions   = levelData.actions.fire
             ;
 
             switch(key) {
