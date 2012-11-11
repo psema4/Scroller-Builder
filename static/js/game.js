@@ -75,8 +75,8 @@ function GameEngine(opts) {
             return tickDirection
         }
 
-      , update = function() {
-            if (isTicking) requestAnimationFrame(update);
+      , update = function(once) {
+            if (isTicking && !once) requestAnimationFrame(update);
 
             ticks += 1 * tickDirection;
             if (ticks < 0) { tickDirection = 1; stopTicking(); }
