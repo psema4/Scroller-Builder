@@ -79,6 +79,8 @@ function Sprite(opts) {
               , frame: frame
               , x: x
               , y: y
+              , w: frames[frame].srcw
+              , h: frames[frame].srch
             };
         }
     ;
