@@ -156,7 +156,6 @@ input {
     width: 25%;
     bottom: 0.5em;
     background-color: transparent;
-    overflow: auto;
 }
 
 #tab-list {
@@ -183,6 +182,7 @@ input {
     bottom: 0px;
     z-index: 1;
     background-color: #fff;
+    border-radius: 4px;
 }
 
 #settings-container ol {
@@ -196,6 +196,7 @@ input {
     padding: 4px;
     list-style-type: none;
     background-color: #ccc;
+    border-radius: 4px;
 }
 
 ol li a,
@@ -207,7 +208,7 @@ ol li a:visited {
 }
 
 ol li a:hover {
-    background-color: #eee;
+    color: #404040;
 }
 
 #settings-container ul {
@@ -221,11 +222,26 @@ ol li a:hover {
 }
 
 .tab h4 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 1.4em;
     margin: 0px;
     padding: 0px;
     padding-left: 1ex;
     color: #fff;
 	background: #404040;
+    border-top-right-radius: 4px;
+}
+
+.tab ul {
+    position: absolute;
+    top: 1.5em;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow: auto;
 }
 
 #settings-container label {
