@@ -140,6 +140,18 @@ function Sprite(opts) {
               , h: frames[frame].srch
             };
         }
+
+      , setSpeed = function (value) {
+      		speed = parseInt(value);
+        }
+
+      , setRotation = function (value) {
+      		rotation = parseInt(value);
+        }
+
+      , setAnimate = function (value) {
+      		animate = value;
+        }
     ;
 
     return {
@@ -159,6 +171,8 @@ function Sprite(opts) {
       , setValue: setValue
       , saveAsImage: saveAsImage
       , getDataURL: getDataURL
+      , setSpeed: setSpeed
+      , setRotation: setRotation
     };
 }
 

@@ -161,6 +161,9 @@
 
  	window.open_popin = open_popin
 
+ 	var sprites = new FileDialog('sprite');
+ 	sprites.add(new File({name: 'spaceArt.png', url: '/assets/img/spaceArt.png', local: false}));
+
  	// Open popups for editing objects if the game isn't running
  	$('#game-screen').onclick = function (e) {
  		if (game.checkTicking()) return;
@@ -175,26 +178,48 @@
 
  			if (elem = $('#config-' + i)) {
  				add(elem, 'shown');
- 				elem.style.left = left_ + info.x + 'px';
+ 				elem.style.left = left_ + info.x + info.w + 'px';
  				elem.style.top = top_ + info.y + 'px';
  			}
  			else
  			{
-	 			console.log(queue[i], queue[i].getInfo())
-	 			elem = open_popin(left_ + info.x, top_ + info.y, 'Sprite ' + i + '<br>');
+	 			elem = open_popin(left_ + info.x + info.w, top_ + info.y, '\
+<strong>Sprite ' + i + '</strong><br>\
+Speed: <input data-is="speed" type="number"><br>\
+Rotate: <input data-is="rotation" type="number"><br>\
+Animate: <input data-is="animate" type="checkbox"><br>');
 	 			elem.id = 'config-' + i;
+	 			elem.style.width = '250px';
+	 			[].forEach.call(elem.querySelectorAll('input'), (function (sprite, info) {
+	 				return function (input) {
+	 				input.value = info[input.dataset.is]
+	 				input.onchange = function () {
+	 					switch (input.dataset.is) {
+	 						case 'speed':
+	 							sprite.setSpeed(input.value);
+	 						break;
+	 						case 'rotation':
+	 							sprite.setRotation(input.value);
+	 						break;
+	 						case 'animate':
+	 							sprite.setAnimate(input.value);
+	 						break;
+	 					}
+	 				}
+	 				}
+	 			}(queue[i], info)));
 	 		}
- 			return;
+	 		break;
  		}
  	}
 
- 	var f = new FileDialog('audio');
- 	f.add(new File({name: 'level1.mp3', url: '/assets/music/level1.mp3', local: false}));
- 	f.add(new File({name: 'level2.mp3', url: '/assets/music/level2.mp3', local: false}));
+ 	var audio = new FileDialog('audio');
+ 	audio.add(new File({name: 'level1.mp3', url: '/assets/music/level1.mp3', local: false}));
+ 	audio.add(new File({name: 'level2.mp3', url: '/assets/music/level2.mp3', local: false}));
 
  	$('#level-music-fake').onfocus = function () {
  		var that = this;
- 		f.open(left(this), top(this), function (file) {
+ 		audio.open(left(this), top(this), function (file) {
  			console.log(file);
  			that.value = file.name;
  			$('#level-music').value = file.url;
@@ -204,7 +229,7 @@
 
  	$('#level-music-fake').onblur = function () {
  		setTimeout(function () {
- 			f.close();
+ 			audio.close();
  		}, 100);
  	}
 
