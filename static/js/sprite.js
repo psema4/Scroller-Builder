@@ -13,6 +13,7 @@ function Sprite(opts) {
       , animateSpeed = opts.animateSpeed || 1
       , lastAnimated = 0
       , speed = opts.speed || 1
+      , rotation = opts.rotation || 0
       , x = opts.startx || 0
       , y = opts.starty || 0
 
@@ -77,6 +78,8 @@ function Sprite(opts) {
             return {
                 animate: animate
               , frame: frame
+              , speed: speed
+              , rotation: rotation
               , x: x
               , y: y
             };
