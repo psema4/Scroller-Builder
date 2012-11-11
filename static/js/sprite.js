@@ -94,6 +94,8 @@ function Sprite(opts) {
               , rotation: rotation
               , x: x
               , y: y
+              , w: frames[frame].srcw
+              , h: frames[frame].srch
             };
         }
     ;

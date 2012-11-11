@@ -35,6 +35,15 @@
  		return left;
  	}
 
+ 	// Get the top position of an element
+ 	function top (elem) {
+ 		var top = elem.offsetTop;
+ 		while (elem = elem.offsetParent) {
+ 			top += elem.offsetTop;
+ 		}
+ 		return top;
+ 	}
+
 
  	$('#login_btn').onclick = function () {
  		add($('#login_form'), 'shown');
@@ -52,6 +61,10 @@
  			game.startTicking();
  			this.paused = false;
  			$('#level-' + game.getLevel() + '-music').play();
+
+ 			[].forEach.call($$('.pop-in'), function (popin) {
+ 				remove(popin, 'shown');
+ 			});
  		}
  		else
  		{
@@ -65,7 +78,10 @@
 
  	$('#next_lvl_btn').onclick = function () {
  		game.nextLevel();
- 		if (!game.checkTicking()) game.update();
+ 		if ($('#play_pause_btn').paused) {
+ 			$('#play_pause_btn').innerHTML = '| |';
+ 			$('#play_pause_btn').paused = false;
+ 		}
  	}
 
  	function Slider (elem, opt) {
@@ -130,5 +146,43 @@
  		var set = val < 0 ? -1 : 1;
  		if (set !== dir) game.setTickDirection(dir = set);
  	});
+
+ 	function open_popin (x, y, html) {
+ 		var popin = document.createElement('div');
+ 		add(popin, 'pop-in');
+ 		popin.innerHTML = "<a href='#' class='close'>&times;</a>" + html;
+ 		document.body.appendChild(popin);
+ 		popin.style.top = y + 'px';
+ 		popin.style.left = x - popin.offsetWidth + 15 + 'px';
+ 		setTimeout(add, 100, popin, 'shown');
+ 		return popin;
+ 	}
+
+ 	// Open popups for editing objects if the game isn't running
+ 	$('#game-screen').onclick = function (e) {
+ 		if (game.checkTicking()) return;
+ 		var left_, top_, x = e.pageX - (left_ = left(this)), y = e.pageY - (top_ = top(this)), queue = game.sprites.queue, i = 0;
+
+ 		for (; i < queue.length; i++) {
+ 			var info = queue[i].getInfo(), right, bottom, elem;
+ 			if (info.x > x || info.y > y) continue;
+ 			right = info.x + info.w;
+ 			bottom = info.y + info.h;
+ 			if (right < x || bottom < y) continue;
+
+ 			if (elem = $('#config-' + i)) {
+ 				add(elem, 'shown');
+ 				elem.style.left = left_ + info.x - elem.offsetWidth + 15 + 'px';
+ 				elem.style.top = top_ + info.y + 'px';
+ 			}
+ 			else
+ 			{
+	 			console.log(queue[i], queue[i].getInfo())
+	 			elem = open_popin(left_ + info.x, top_ + info.y, 'Sprite ' + i + '<br>');
+	 			elem.id = 'config-' + i;
+	 		}
+ 			return;
+ 		}
+ 	}
 
  } ());

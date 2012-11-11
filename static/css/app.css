@@ -85,7 +85,7 @@ input {
 	-webkit-transform: scale(1);
 }
 
-.pop-in .close {
+.pop-in .close, .pill .close {
 	float: right;
 	color: black;
 	text-decoration: none;
@@ -96,7 +96,7 @@ input {
 	-webkit-transition: color .25s;
 }
 
-.pop-in .close:hover{
+.pop-in .close:hover, .pill .close:hover {
 	color: #DD0000;
 }
 
@@ -134,6 +134,19 @@ input {
 	position: absolute;
 	left: 0;
 }
+
+/* - Pill */
+.pill {
+	background: rgba(0, 0, 0, 0.3);
+	border-radius: 5px;
+	padding: 2px;
+	display: inline-block;
+}
+
+.pill .close {
+	top: 0;
+}
+
 
 /* Settings Panel */
 #settings-container {
