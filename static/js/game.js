@@ -23,10 +23,7 @@ function GameEngine(opts) {
       , engine = {
             state: 'loading'
         }
-/*
-      , $ = function(sel) { return document.querySelector(sel); }
-      , $$ = function(sel) { return document.querySelectorAll(sel); }
-*/
+
       , logger = function() { console.log('GameEngine', arguments); }
 
       , getCtx = function() {
@@ -300,6 +297,44 @@ function GameEngine(opts) {
         }
 
       , playerEventStop = function(evt) {
+            var key = evt.keyCode
+              , sprite = sprites.queue[0]
+              , levelData = gameData.levels[level]
+              , startFrame = levelData.sprites.player.startFrame
+              , postActions = levelData.playerPostActions
+              , postLeftActions = postActions.left
+              , postRightActions = postActions.right
+              , postForwardActions = postActions.forward
+              , postBackActions = postActions.back
+              , postFireActions = postActions.fire
+            ;
+
+            switch(key) {
+                case 37:
+                    // left action end
+                    for (var i=0; i< postLeftActions.length; i++) { try { sprite[postLeftActions[i]]() } catch(e) { logger('postLeftActions['+i+']', postLeftActions[i], e); } };
+                    break;
+
+                case 39:
+                    // right action end
+                    for (var i=0; i< postRightActions.length; i++) { try { sprite[postRightActions[i]]() } catch(e) { logger('postRightActions['+i+']', postRightActions[i], e); } };
+                    break;
+
+                case 38:
+                    // up action end
+                    break;
+
+                case 40:
+                    // down action end
+                    break;
+
+                case 32:
+                    // fire action end
+                    break;
+
+                default:
+            }
+            
         }
     ;
 
