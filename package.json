@@ -1,6 +1,6 @@
 {
   "name": "nko3-northernnode",
-  "version": "0.0.0-1",
+  "version": "0.0.0-2",
   "description": "NorthernNode",
   "main": "server.js",
   "scripts": {

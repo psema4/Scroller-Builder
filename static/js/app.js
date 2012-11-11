@@ -36,7 +36,7 @@ window.addEventListener('load', function() {
             var tabs = $$('.tab2');
 
             [].forEach.call(tabs, function(t) {
-                t.style.visibility = (t.id == targetTab) ? 'visible' : 'hidden';
+                t.style.display = (t.id == targetTab) ? 'block' : 'none';
             });
         }
     };
@@ -94,6 +94,32 @@ window.addEventListener('load', function() {
     window.game = new GameEngine();
 
     game.loadGame('game.json', function(gameData) {
+        /* copy sprites to toolbox */
+        var toolboxSetup = function() {
+            var numSprites = game.sprites.queue.length;
+
+            if (numSprites < 1) {
+                setTimeout(toolboxSetup, 500);
+
+            } else {
+                var selPrefix = "img[alt='tool "
+                  , selPostfix = "']"
+                  , boxes = $$('img[alt]')
+                ;
+
+                [].forEach.call(boxes, function(box) {
+                    box.style.visibility = 'hidden';
+                });
+
+                for (var i=0; i<numSprites; i++) {
+                    $(selPrefix + i + selPostfix).src = game.sprites.queue[i].getDataURL()
+                    $(selPrefix + i + selPostfix).style.visibility = 'visible';
+                }
+            }
+        };
+
+        setTimeout(toolboxSetup, 2000);
+
         /* attach player inputs */
         window.addEventListener('keydown', function(evt) {
             game.playerEventStart(evt);
