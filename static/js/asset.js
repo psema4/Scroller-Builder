@@ -11,11 +11,16 @@ function File (opt) {
 
 function FileDialog (type) {
 	var files = []
+	  , callback = null
 	  , popin = document.createElement('div')
-	  , open = function (x, y) {
+	  , open = function (x, y, cb) {
 	  		popin.style.left = x + 'px';
 	  		popin.style.top = y + 'px';
 	  		popin.className = 'pop-in shown';
+	  		callback = function (file) {
+				callback = null;
+				cb(file);
+			};
 		}
 	  , close = function (x, y) {
 	  		popin.className = 'pop-in';
@@ -43,7 +48,9 @@ function FileDialog (type) {
 				var reader = new FileReader();
 				 
 				reader.onload = function (evt) {
-					add(new File({name: file.name, url: evt.target.result, local: true}));
+					var file;
+					add(file = new File({name: file.name, url: evt.target.result, local: true}));
+					if (callback) callback(file);
 				};
 
 				reader.readAsDataURL(file);
@@ -51,6 +58,12 @@ function FileDialog (type) {
 		}
 	}, false);
 	window.files_ = files;
+
+	popin.onclick = function (e) {
+		if (e.target.dataset.id && callback) {
+			callback(files[e.target.dataset.id]);
+		}
+	};
 
 	return {
 		open: open

@@ -193,11 +193,19 @@
  	f.add(new File({name: 'level2.mp3', url: '/assets/music/level2.mp3', local: false}));
 
  	$('#level-music-fake').onfocus = function () {
- 		f.open(left(this), top(this));
+ 		var that = this;
+ 		f.open(left(this), top(this), function (file) {
+ 			console.log(file);
+ 			that.value = file.name;
+ 			$('#level-music').value = file.url;
+ 			$('#level-music').onchange();
+ 		});
  	}
 
  	$('#level-music-fake').onblur = function () {
- 		f.close();
+ 		setTimeout(function () {
+ 			f.close();
+ 		}, 100);
  	}
 
  } ());
