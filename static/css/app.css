@@ -153,9 +153,10 @@ input {
     position: absolute;
     top: 3.5em;
     right: 0.5em;
-    width: 25%;
+    width: 300px;
     bottom: 0.5em;
     background-color: transparent;
+    opacity: 0.9;
 }
 
 #tab-list {
