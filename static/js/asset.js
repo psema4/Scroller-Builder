@@ -33,7 +33,7 @@ function FileDialog (type) {
 	    }
 
 	popin.className = 'pop-in';
-	popin.innerHTML = '<ul class="list"><li class="add">Drag a file to upload</li></ul>';
+	popin.innerHTML = '<ul class="list"><li class="add" style=display:none>Drag a file to upload</li></ul>';
 
 	document.body.appendChild(popin);
 

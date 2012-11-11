@@ -8,7 +8,7 @@ function User (opts) {
 
 	var authenticate = function (callback) {
 			console.log('Authenticate', opts.username, opts.password);
-			callback(true);
+			callback(null);
 		}
 	  , load = function (callback) {
 	  		

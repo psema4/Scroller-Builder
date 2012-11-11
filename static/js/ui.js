@@ -44,10 +44,36 @@
  		return top;
  	}
 
-
  	$('#login_btn').onclick = function () {
  		add($('#login_form'), 'shown');
+ 		$('#login_form input').focus();
  	};
+
+ 	function login () {
+ 		var user = new User({username: $('#login_form input').value, password: $('#login_form input[type="password"]').value});
+ 		user.authenticate(function (err) {
+ 			if (!err) {
+ 				$('.login').innerHTML = 'Hello, <strong>' + $('#login_form input').value + '</strong>!';
+ 				remove($('#login_form'), 'shown');
+ 			}
+ 			else if (err === 'username')
+ 			{
+ 				$('#login_form input').focus();
+ 			}
+ 			else
+ 			{
+ 				$('#login_form input[type="password"]').focus();
+ 			}
+ 		});
+ 	}
+
+ 	$('#login_form').onkeydown = function (e) {
+ 		if (e.keyCode === 13) {
+ 			login();
+ 		}
+ 	}
+
+ 	$('#login_form .btn').onclick = login;
 
  	document.onclick = function (e) {
  		if (has(e.target, 'close')) {
@@ -177,38 +203,42 @@
  			if (right < x || bottom < y) continue;
 
  			if (elem = $('#config-' + i)) {
- 				add(elem, 'shown');
- 				elem.style.left = left_ + info.x + info.w + 'px';
- 				elem.style.top = top_ + info.y + 'px';
+ 				elem.parentNode.removeChild(elem);
  			}
- 			else
- 			{
-	 			elem = open_popin(left_ + info.x + info.w, top_ + info.y, '\
+	 		elem = open_popin(left_ + info.x + info.w, top_ + info.y, '\
 <strong>Sprite ' + i + '</strong><br>\
 Speed: <input data-is="speed" type="number"><br>\
+StartX: <input data-is="startx" type="number"><br>\
+StartY: <input data-is="starty" type="number"><br>\
 Rotate: <input data-is="rotation" type="number"><br>\
 Animate: <input data-is="animate" type="checkbox"><br>');
-	 			elem.id = 'config-' + i;
-	 			elem.style.width = '250px';
-	 			[].forEach.call(elem.querySelectorAll('input'), (function (sprite, info) {
-	 				return function (input) {
-	 				input.value = info[input.dataset.is]
-	 				input.onchange = function () {
-	 					switch (input.dataset.is) {
-	 						case 'speed':
-	 							sprite.setSpeed(input.value);
-	 						break;
-	 						case 'rotation':
-	 							sprite.setRotation(input.value);
-	 						break;
-	 						case 'animate':
-	 							sprite.setAnimate(input.value);
-	 						break;
-	 					}
-	 				}
-	 				}
-	 			}(queue[i], info)));
-	 		}
+ 			elem.id = 'config-' + i;
+ 			elem.style.width = '250px';
+ 			[].forEach.call(elem.querySelectorAll('input'), (function (sprite, info) {
+ 				return function (input) {
+ 				input.value = info[input.dataset.is]
+ 				input.onchange = function () {
+ 					switch (input.dataset.is) {
+ 						case 'speed':
+ 							sprite.setSpeed(input.value);
+ 						break;
+ 						case 'rotation':
+ 							sprite.setRotation(input.value);
+ 						break;
+ 						case 'animate':
+ 							sprite.setAnimate(input.value);
+ 						break;
+ 						// TODO: SET START POSITIONS
+ 						case 'startx':
+ 							
+ 						break;
+ 						case 'starty':
+ 							
+ 						break;
+ 					}
+ 				}
+ 				}
+ 			}(queue[i], info)));
 	 		break;
  		}
  	}
