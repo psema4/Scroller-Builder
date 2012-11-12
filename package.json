@@ -1,0 +1,21 @@
+{
+  "name": "nko3-northernnode",
+  "version": "0.0.0-3",
+  "description": "NorthernNode",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nko3/northernnode.git"
+  },
+  "dependencies": {
+    "express": "3.0.2",
+    "passport": "0.1.15"
+  },
+  "engines": {
+    "node": "0.8.x"
+  },
+  "subdomain": "northernnode.nko3"
+}
