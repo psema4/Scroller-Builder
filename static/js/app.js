@@ -164,7 +164,7 @@ window.addEventListener('load', function() {
                         if (x > screenX1 && x < screenX2) {
                             if (y > screenY1 && y < screenY2) {
                                 var spriteId = this.alt.replace(/^tool /, '');
-                                game.addWaveToLevel(spriteId);
+                                game.addWaveToLevel(spriteId, x-screenX1);
                             }
                         }
 

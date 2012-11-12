@@ -10,7 +10,7 @@
     },
     "levels":   [
         {
-            "titleDelay":       200,
+            "titleDelay":       150,
             "title":            "Level 1",
             "description":      "Go!",
             "music":            "/assets/music/level1.mp3",
@@ -42,6 +42,7 @@
                     "starty":     380,
                     "speed":      5,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 1,
                     "frames": [
@@ -73,6 +74,7 @@
                     "dy": 1,
                     "speed":      5,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -90,8 +92,11 @@
                     "name": "enemy2",
                     "startx":     -120,
                     "starty":     -0,
+                    "dx": 1,
+                    "dy": 1,
                     "speed":      5,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -111,6 +116,7 @@
                     "starty":     -64,
                     "speed":      15,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -129,6 +135,7 @@
                     "starty":     -20,
                     "speed":      0,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -147,6 +154,7 @@
                     "starty":     -40,
                     "speed":      15,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -165,6 +173,7 @@
                     "starty":     -64,
                     "speed":      0,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -183,6 +192,7 @@
                     "starty":     30,
                     "speed":      0,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -199,8 +209,11 @@
                     "name": "obstacle1",
                     "startx":     -400,
                     "starty":     0,
+                    "dx": 0,
+                    "dy": 1,
                     "speed":      0,
                     "rotation":   0,
+                    "rotateStep": 1,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -218,8 +231,11 @@
                     "name": "obstacle2",
                     "startx":     -470,
                     "starty":     0,
+                    "dx": 0,
+                    "dy": 1,
                     "speed":      0,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -235,19 +251,43 @@
 
             "waves": [
                 {
+                    "sprite": "obstacle1",
+                    "class": 1,
+                    "at": 300
+                }, {
                     "sprite": "enemy1",
                     "class": 1,
                     "at": 400
                 }, {
-                    "sprite": "enemy1",
+                    "sprite": "obstacle2",
                     "class": 1,
                     "at": 500
+                }, {
+                    "sprite": "enemy1",
+                    "class": 1,
+                    "at": 550
+                }, {
+                    "sprite": "obstacle1",
+                    "class": 1,
+                    "at": 600
+                }, {
+                    "sprite": "osbstacle1",
+                    "class": 1,
+                    "at": 650
+                }, {
+                    "sprite": "enemy1",
+                    "class": 1,
+                    "at": 700
+                }, {
+                    "sprite": "enemy2",
+                    "class": 1,
+                    "at": 750
                 }
             ]
         },
 
         {
-            "titleDelay":       200,
+            "titleDelay":       150,
             "title":            "Level 2",
             "description":      "Survive!",
             "music":            "/assets/music/level2.mp3",
@@ -274,10 +314,12 @@
             "spritesheet": "/assets/img/spaceArt.png",
             "sprites": {
                 "player": {
+                    "name": "player",
                     "startx":     265,
                     "starty":     380,
                     "speed":      5,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 1,
                     "frames": [
@@ -301,10 +343,14 @@
                 },
 
                 "enemy1": {
-                    "startx":     0,
+                    "name": "enemy1",
+                    "startx":     -150,
                     "starty":     0,
+                    "dx": 0,
+                    "dy": 1,
                     "speed":      5,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -319,10 +365,14 @@
                 },
 
                 "enemy2": {
-                    "startx":     120,
+                    "name": "enemy2",
+                    "startx":     -120,
                     "starty":     0,
+                    "dx": -1,
+                    "dy": 1,
                     "speed":      5,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -337,10 +387,12 @@
                 },
 
                 "playerFire": {
-                    "startx":     250,
-                    "starty":     64,
+                    "name": "playerFire",
+                    "startx":     -250,
+                    "starty":     -64,
                     "speed":      15,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -354,10 +406,12 @@
                 },
 
                 "playerHit": {
-                    "startx":     230,
-                    "starty":     20,
+                    "name": "playerHit",
+                    "startx":     -230,
+                    "starty":     -20,
                     "speed":      0,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -371,10 +425,12 @@
                 },
 
                 "enemyFire": {
-                    "startx":     290,
-                    "starty":     40,
+                    "name": "enemyFire",
+                    "startx":     -290,
+                    "starty":     -40,
                     "speed":      15,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -388,10 +444,12 @@
                 },
 
                 "enemyHit": {
-                    "startx":     270,
-                    "starty":     64,
+                    "name": "enemyHit",
+                    "startx":     -270,
+                    "starty":     -64,
                     "speed":      0,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -405,10 +463,12 @@
                 },
 
                 "playerLife": {
-                    "startx":     340,
-                    "starty":     30,
+                    "name": "playerLife",
+                    "startx":     -340,
+                    "starty":     -30,
                     "speed":      0,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -422,10 +482,14 @@
                 },
 
                 "obstacle1": {
-                    "startx":     400,
+                    "name": "obstacle1",
+                    "startx":     -400,
                     "starty":     0,
+                    "dx": 0,
+                    "dy": 5,
                     "speed":      0,
                     "rotation":   0,
+                    "rotateStep": 1,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [
@@ -440,10 +504,14 @@
                 },
 
                 "obstacle2": {
-                    "startx":     470,
+                    "name": "obstacle2",
+                    "startx":     -470,
                     "starty":     0,
+                    "dx": 0,
+                    "dy": 3,
                     "speed":      0,
                     "rotation":   0,
+                    "rotateStep": 0,
                     "animate":    false,
                     "startFrame": 0,
                     "frames": [

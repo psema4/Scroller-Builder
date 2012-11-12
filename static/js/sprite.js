@@ -16,6 +16,7 @@ function Sprite(opts) {
       , lastAnimated = 0
       , speed = opts.speed || 1
       , rotation = opts.rotation || 0
+      , rotateStep = opts.rotateStep || 0
       , score = opts.score || 0
       , value = opts.value || 0
       , x = opts.startx || 0
@@ -70,6 +71,14 @@ function Sprite(opts) {
             );
 
             if (animate && (game.getTicks()-lastAnimated >= animateSpeed)) {
+                if (rotateStep != 0) {
+                    rotation += rotateStep;
+                    if (rotation < 0) rotation += 360;
+                    if (rotation > 360) rotation -= 360;
+                };
+
+                
+
                 nextFrame();
             }
         }
@@ -137,7 +146,8 @@ function Sprite(opts) {
 
       , getInfo = function() {
             return {
-                animate: animate
+                name: name
+              , animate: animate
               , frame: frame
               , speed: speed
               , rotation: rotation

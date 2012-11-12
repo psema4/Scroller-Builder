@@ -1,14 +1,14 @@
 {
-  "name": "nko3-northernnode",
-  "version": "0.0.0-3",
-  "description": "NorthernNode",
+  "name": "Scroller-Builder",
+  "version": "0.0.0-4",
+  "description": "Simple HTML5 Scroller Builder",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:nko3/northernnode.git"
+    "url": "git@github.com:psema4/Scroller-Builder.git"
   },
   "dependencies": {
     "express": "3.0.2",
@@ -16,6 +16,5 @@
   },
   "engines": {
     "node": "0.8.x"
-  },
-  "subdomain": "northernnode.nko3"
+  }
 }
