@@ -482,6 +482,28 @@ try {
             }
             
         }
+
+      , saveGame = function() {
+            var data = 'data=' + JSON.stringify(game.getGameData())
+              , saveURL = '/save'
+            ;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', saveURL, true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.responseType = 'text';
+
+            xhr.onload = function() {
+                var result = xhr.responseText;
+                if (result != 'ERR') 
+                    console.log('saved: ' + result)
+                else
+                    console.warn('error saving game!')
+                ;
+            }
+
+            xhr.send(encodeURI(data));
+        }
     ;
 
     // Constructor
@@ -535,6 +557,7 @@ try {
       , playerEventStart: playerEventStart
       , playerEventStop: playerEventStop
       , addWaveToLevel: addWaveToLevel
+      , saveGame: saveGame
 
         // objects
       , audio: audio
