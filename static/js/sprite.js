@@ -155,6 +155,8 @@ function Sprite(opts) {
               , value: value
               , x: x
               , y: y
+              , dx: dx
+              , dy: dy
               , w: frames[frame].srcw
               , h: frames[frame].srch
             };

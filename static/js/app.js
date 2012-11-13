@@ -141,32 +141,41 @@ window.addEventListener('load', function() {
                     $(sel).style.visibility = 'visible';
 
                     // setup drag operations
-                    // drops on canvas should set sprites x coordinate, y always starts at 0
                     $(sel).addEventListener('dragstart', function(evt) {
-                        //console.log('dragstart on ', this.alt, evt.screenX, evt.screenY, evt);
                         evt.dataTransfer.effectAllowed = 'move';
+                        this.style.opacity = 0.5;
 
+                        // set the drag image (toolbutton scaled to 64x64, use source sprite image data)
+                        var spriteIndex = this.alt.replace(/^tool /, '')
+                          , dragIcon = document.createElement('img')
+                        ;
+
+                        dragIcon.src = game.sprites.queue[spriteIndex].getDataURL();
+                        evt.dataTransfer.setDragImage(dragIcon, 0, 0);
+
+                        // set transfer data - not used
                         var evtData = 'dragData';
-                        //console.log('starting drag with data:', evtData);
                         evt.dataTransfer.setData('text/plain', evtData);
                     }, false);
 
                     $(sel).addEventListener('dragend', function(evt) {
-                        //console.log('dragend on ', this.alt, evt.screenX, evt.screenY, evt);
                         var screenX1 = parseInt(window.getComputedStyle($('#game-screen')).left)
                           , screenY1 = parseInt(window.getComputedStyle($('#game-screen')).top)
                           , screenX2 = screenX1+640
                           , screenY2 = screenY1+480
-                          , x = evt.screenX
-                          , y = evt.screenY
+                          , x = evt.pageX
+                          , y = evt.pageY
                         ;
 
                         if (x > screenX1 && x < screenX2) {
                             if (y > screenY1 && y < screenY2) {
                                 var spriteId = this.alt.replace(/^tool /, '');
-                                game.addWaveToLevel(spriteId, x-screenX1);
+                                // pass in x,y and use y to work out the actual tick and x values (y == time)
+                                game.addWaveToLevel(spriteId, x-screenX1, y-screenY1);
                             }
                         }
+
+                        this.style.opacity = 1.0;
 
                     }, false);
 

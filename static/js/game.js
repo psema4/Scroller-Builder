@@ -12,6 +12,7 @@ function GameEngine(opts) {
             width: 640
           , height: 480
         }
+      , config = opts.config || { resumeOnDrop: false }
       , ctx // canvas context
       , stars = []
       , gameData = {}
@@ -350,19 +351,51 @@ try {
       , getLevelData = function() { return gameData.levels[level]; }
       , getLevel = function() { return level; }
 
-      , addWaveToLevel = function(spriteIndex, x) {
+      , addWaveToLevel = function(spriteIndex, x, y) {
+            var wasTicking = checkTicking()
+            if (wasTicking) stopTicking();
+
+            // FIXME: calculations (calcTime, calcX) seem off a bit... almost right
             var time = ticks - engine.levelStartTicks
+              , screenYOffset = parseInt(window.getComputedStyle($('#game-container')).top)
+              , yOffset = (y - screenYOffset) // cancel out screen's y-offset
+              , calcTime = time - yOffset     // figure out tick to generate wave at if y > 0
+              , calcX = x || 0                // figure out what x would have been if y == 0
               , levelData = gameData.levels[level]
-              , waveData = {
-                    sprite: sprites.queue[spriteIndex].getInfo().name
+              , spriteData = sprites.queue[spriteIndex].getInfo()
+              , xDelta = (spriteData.dx * spriteData.speed) * yOffset
+              , yDelta = (spriteData.dy * spriteData.speed) * yOffset
+            ;
+
+            if (calcTime < 0) calcTime = 0;
+            calcX -= xDelta;
+
+            var waveData = {
+                    sprite: spriteData.name
                   , class: 1
-                  , at: time
-                  , x: x
+                  , at: calcTime
+                  , x: calcX
+                  , y: 0
                 }
             ;
 
-            console.log('create waveData', waveData);
+            //console.log('create waveData', waveData, 'using spriteData', spriteData, ' with spriteSpec', levelData.sprites[spriteData.name]);
             levelData.waves.push(waveData);
+
+            // drop specified sprite at x,y
+            var spritesheetName = 'level-'+ level +'-sprites'
+              , sprite = sprites.addSprite(spritesheetName, levelData.sprites[spriteData.name])
+            ;
+
+            sprite.moveTo(x, yOffset);
+
+            // resume ticking if we were previously
+            if (config.resumeOnDrop && wasTicking)
+                startTicking()
+
+            // otherwise tick once to update the display
+            else 
+                update();
         }
 
       , getEngineState = function() { return engine; }
@@ -485,6 +518,7 @@ try {
 
     // public api
     return {
+        // methods
         update: update
       , getCtx: getCtx
       , getTicks: getTicks
@@ -495,13 +529,16 @@ try {
       , loadGame: loadGame
       , getGameData: getGameData
       , nextLevel: nextLevel
-      , getLevelData: getLevelData
+      , getLevelData: getLevelData // should just export engine with other objects below
       , getLevel: getLevel
-      , audio: audio
-      , sprites: sprites
       , getEngineState: getEngineState
       , playerEventStart: playerEventStart
       , playerEventStop: playerEventStop
       , addWaveToLevel: addWaveToLevel
+
+        // objects
+      , audio: audio
+      , sprites: sprites // SpriteManager
+      , config: config
     };
 }
