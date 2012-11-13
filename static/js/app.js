@@ -107,8 +107,10 @@ window.addEventListener('load', function() {
     // Engine startup
     window.game = new GameEngine();
 
-    game.loadGame('game.json', function(gameData) {
-        /* copy sprites to toolbox */
+    window.gameLoader = function(gameFilename) {
+        gameFilename = gameFilename || 'game.json';
+
+    game.loadGame(gameFilename, function(gameData) {
         var toolboxSetup = function() {
             var numSprites = game.sprites.queue.length;
 
@@ -188,4 +190,28 @@ window.addEventListener('load', function() {
             game.playerEventStop(evt);
         });
     });
+
+    }; // end gameLoader()
+
+
+    // get the list of available games and add it to the Game tab
+    var template = '<div class="__CLASS__"><a href="#" onclick="gameLoader(\'__FILENAME__\')">__FILE__</a></div>';
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/list', true);
+    xhr.responseType = 'text';
+    xhr.onload = function() {
+        var games = JSON.parse(xhr.responseText);
+        for (var i=0; i<games.length; i++) {
+            var filename  = games[i]
+              , shortname = filename.replace(/\.json$/,'')
+              , className = (i % 2 == 0) ? "even" : "odd"
+              , entry     = template.replace(/__CLASS__/, className).replace(/__FILENAME__/, filename).replace(/__FILE__/, shortname)
+            ;
+
+            $('#game-list').innerHTML += entry;
+        }
+    };
+    xhr.send();
+
+    gameLoader(); // load the default game
 });

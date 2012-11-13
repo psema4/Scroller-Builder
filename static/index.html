@@ -97,12 +97,9 @@
                     <ul>
                         <li><label for="game-title">Title</label><input id="game-title" class="setting" type="text" /></li>
                         <li><label for="game-subtitle">Subtitle</label><input id="game-subtitle" class="setting" type="text" /></li>
-<!--
-                        <li align="center"><br>Game.json</li>
-                        <li align="center"><button id="export">Show</button> <button onclick="$('#export-out').style.visibility='hidden';">Hide</button></li>
-                        <li align="center"><textarea id="export-out" readonly></textarea></li>
--->
                         <li align="center"><br /><button onclick="game.saveGame()">Save</button></li>
+                        <li align="center">Saved Games:</li>
+                        <li id="game-list"></li> <!-- see app..js -->
                     </ul>
                 </div>
 

@@ -355,11 +355,24 @@ input.setting {
 }
 
 /* Misc */
-#export-out {
-    margin: 4px;
-    border: 2px solid #404040;
-    border-radius: 4px;
-    width: 80%;
-    min-height: 200px;
-    visibility: hidden;
+#game-list {
+    margin: 1em;
+    list-style: none;
+}
+#game-list a { color: #404040; text-decoration: none; }
+#game-list a:hover { color: #808080; text-decoration: none; }
+
+#game-list div {
+    margin: 0px;
+    padding: 2px;
+}
+
+.even {
+    padding: 1em;
+    background-color: #eee;
+}
+
+.odd {
+    padding: 1em;
+    background-color: #ccc;
 }

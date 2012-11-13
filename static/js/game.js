@@ -231,10 +231,20 @@ try {
         }
 
         // FIXME: error handling
-      , loadGame = function(url, cb) {
+      , loadGame = function(gameFilename, cb) {
+            if (checkTicking()) stopTicking();
+            ticks = 0;
+
+            if (sprites.queue && sprites.queue.length > 0) {
+                // not very graceful
+                sprites.removeAll();
+                $('#sprite-container').innerHTML = '';
+                $('#audio-container').innerHTML = '';
+            }
+
             var xhr = new XMLHttpRequest();
 
-            xhr.open('GET', url, true);
+            xhr.open('GET', '/load/'+gameFilename, true);
             xhr.responseType = 'text';
 
             xhr.onload = function() {
@@ -265,6 +275,8 @@ try {
                         $('#'+musicName).play();
                         engine.state = 'level-title';
                         engine.levelStartTicks = ticks;
+
+                        startTicking(); // everything's loaded for this level, play!
                     });
                 });
 

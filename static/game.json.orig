@@ -1,0 +1,541 @@
+{
+    "title":    "Game 1",
+    "subtitle": "New Game",
+    "license":  "TBD",
+    "credits":  [
+    ],
+    "playerStartData": {
+        "lives": 3,
+        "rateOfFire": 1
+    },
+    "levels":   [
+        {
+            "titleDelay":       150,
+            "title":            "Level 1",
+            "description":      "Go!",
+            "music":            "/assets/music/level1.mp3",
+            "backgroundType":   "stars",
+            "progressionType":  "ticks",
+            "progressionValue": 1500,
+
+            "playerActions": {
+                "left":    [ "prevFrame", "moveLeft" ],
+                "right":   [ "nextFrame", "moveRight" ],
+                "forward": [ "moveForward" ],
+                "back":    [ "moveBack" ],
+                "fire":    [ "fire" ]
+            },
+
+            "playerPostActions": {
+                "left":    [ "defaultFrame" ],
+                "right":   [ "defaultFrame" ],
+                "forward": [ ],
+                "back":    [ ],
+                "fire":    [ ]
+            },
+
+            "spritesheet":    "/assets/img/spaceArt.png",
+            "sprites": {
+                "player": {
+                    "name": "player",
+                    "startx":     265,
+                    "starty":     380,
+                    "speed":      5,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 1,
+                    "frames": [
+                        {
+                            "srcx": 268,
+                            "srcy": 363,
+                            "srcw": 105,
+                            "srch": 90
+                        }, {
+                            "srcx": 371,
+                            "srcy": 363,
+                            "srcw": 105,
+                            "srch": 90
+                        }, {
+                            "srcx": 480,
+                            "srcy": 363,
+                            "srcw": 105,
+                            "srch": 90
+                        }
+                    ],
+                    "score": 0
+                },
+
+                "enemy1": {
+                    "name": "enemy1",
+                    "startx":     -100,
+                    "starty":     0,
+                    "dx": 0,
+                    "dy": 1,
+                    "speed":      5,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 587,
+                            "srcy": 146,
+                            "srcw": 100,
+                            "srch": 60
+                        }
+                    ],
+                    "value": 100
+                },
+
+                "enemy2": {
+                    "name": "enemy2",
+                    "startx":     -120,
+                    "starty":     -0,
+                    "dx": 1,
+                    "dy": 1,
+                    "speed":      5,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 587,
+                            "srcy": 225,
+                            "srcw": 100,
+                            "srch": 100
+                        }
+                    ],
+                    "value": 500
+                },
+
+                "playerFire": {
+                    "name": "playerFire",
+                    "startx":     -250,
+                    "starty":     -64,
+                    "speed":      15,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 460,
+                            "srcy": 280,
+                            "srcw": 64,
+                            "srch": 64
+                        }
+                    ]
+                },
+
+                "playerHit": {
+                    "name": "playerHit",
+                    "startx":     -230,
+                    "starty":     -20,
+                    "speed":      0,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 440,
+                            "srcy": 210,
+                            "srcw": 64,
+                            "srch": 64
+                        }
+                    ]
+                },
+
+                "enemyFire": {
+                    "name": "enemyFire",
+                    "startx":     -290,
+                    "starty":     -40,
+                    "speed":      15,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 530,
+                            "srcy": 280,
+                            "srcw": 64,
+                            "srch": 64
+                        }
+                    ]
+                },
+
+                "enemyHit": {
+                    "name": "enemyHit",
+                    "startx":     -270,
+                    "starty":     -64,
+                    "speed":      0,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 510,
+                            "srcy": 210,
+                            "srcw": 64,
+                            "srch": 64
+                        }
+                    ]
+                },
+
+                "playerLife": {
+                    "name": "playerLife",
+                    "startx":     -340,
+                    "starty":     30,
+                    "speed":      0,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 270,
+                            "srcy": 300,
+                            "srcw": 45,
+                            "srch": 35
+                        }
+                    ]
+                },
+
+                "obstacle1": {
+                    "name": "obstacle1",
+                    "startx":     -400,
+                    "starty":     0,
+                    "dx": 0,
+                    "dy": 1,
+                    "speed":      0,
+                    "rotation":   0,
+                    "rotateStep": 1,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 115,
+                            "srcy": 400,
+                            "srcw": 50,
+                            "srch": 50
+                        }
+                    ],
+                    "value": 10
+                },
+
+                "obstacle2": {
+                    "name": "obstacle2",
+                    "startx":     -470,
+                    "starty":     0,
+                    "dx": 0,
+                    "dy": 1,
+                    "speed":      0,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 110,
+                            "srcy": 300,
+                            "srcw": 140,
+                            "srch": 150
+                        }
+                    ]
+                }
+            },
+
+            "waves": [
+                {
+                    "sprite": "obstacle1",
+                    "class": 1,
+                    "at": 300
+                }, {
+                    "sprite": "enemy1",
+                    "class": 1,
+                    "at": 400
+                }, {
+                    "sprite": "obstacle2",
+                    "class": 1,
+                    "at": 500
+                }, {
+                    "sprite": "enemy1",
+                    "class": 1,
+                    "at": 550
+                }, {
+                    "sprite": "obstacle1",
+                    "class": 1,
+                    "at": 600
+                }, {
+                    "sprite": "osbstacle1",
+                    "class": 1,
+                    "at": 650
+                }, {
+                    "sprite": "enemy1",
+                    "class": 1,
+                    "at": 700
+                }, {
+                    "sprite": "enemy2",
+                    "class": 1,
+                    "at": 750
+                }
+            ]
+        },
+
+        {
+            "titleDelay":       150,
+            "title":            "Level 2",
+            "description":      "Survive!",
+            "music":            "/assets/music/level2.mp3",
+            "backgroundType":   "stars",
+            "progressionType":  "score",
+            "progressionValue": 5000,
+
+            "playerActions": {
+                "left":    [ "prevFrame", "moveLeft" ],
+                "right":   [ "nextFrame", "moveRight" ],
+                "forward": [ "moveForward" ],
+                "back":    [ "moveBack" ],
+                "fire":    [ "fire" ]
+            },
+
+            "playerPostActions": {
+                "left":    [ "defaultFrame" ],
+                "right":   [ "defaultFrame" ],
+                "forward": [ ],
+                "back":    [ ],
+                "fire":    [ ]
+            },
+
+            "spritesheet": "/assets/img/spaceArt.png",
+            "sprites": {
+                "player": {
+                    "name": "player",
+                    "startx":     265,
+                    "starty":     380,
+                    "speed":      5,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 1,
+                    "frames": [
+                        {
+                            "srcx": 273,
+                            "srcy": 363,
+                            "srcw": 100,
+                            "srch": 90
+                        }, {
+                            "srcx": 371,
+                            "srcy": 363,
+                            "srcw": 110,
+                            "srch": 90
+                        }, {
+                            "srcx": 480,
+                            "srcy": 363,
+                            "srcw": 100,
+                            "srch": 90
+                        }
+                    ]
+                },
+
+                "enemy1": {
+                    "name": "enemy1",
+                    "startx":     -150,
+                    "starty":     0,
+                    "dx": 0,
+                    "dy": 1,
+                    "speed":      5,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 587,
+                            "srcy": 146,
+                            "srcw": 100,
+                            "srch": 60
+                        }
+                    ],
+                    "value": 100
+                },
+
+                "enemy2": {
+                    "name": "enemy2",
+                    "startx":     -120,
+                    "starty":     0,
+                    "dx": -1,
+                    "dy": 1,
+                    "speed":      5,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 587,
+                            "srcy": 225,
+                            "srcw": 100,
+                            "srch": 100
+                        }
+                    ],
+                    "value": 500
+                },
+
+                "playerFire": {
+                    "name": "playerFire",
+                    "startx":     -250,
+                    "starty":     -64,
+                    "speed":      15,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 460,
+                            "srcy": 280,
+                            "srcw": 64,
+                            "srch": 64
+                        }
+                    ]
+                },
+
+                "playerHit": {
+                    "name": "playerHit",
+                    "startx":     -230,
+                    "starty":     -20,
+                    "speed":      0,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 440,
+                            "srcy": 210,
+                            "srcw": 64,
+                            "srch": 64
+                        }
+                    ]
+                },
+
+                "enemyFire": {
+                    "name": "enemyFire",
+                    "startx":     -290,
+                    "starty":     -40,
+                    "speed":      15,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 530,
+                            "srcy": 280,
+                            "srcw": 64,
+                            "srch": 64
+                        }
+                    ]
+                },
+
+                "enemyHit": {
+                    "name": "enemyHit",
+                    "startx":     -270,
+                    "starty":     -64,
+                    "speed":      0,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 510,
+                            "srcy": 210,
+                            "srcw": 64,
+                            "srch": 64
+                        }
+                    ]
+                },
+
+                "playerLife": {
+                    "name": "playerLife",
+                    "startx":     -340,
+                    "starty":     -30,
+                    "speed":      0,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 270,
+                            "srcy": 300,
+                            "srcw": 45,
+                            "srch": 35
+                        }
+                    ]
+                },
+
+                "obstacle1": {
+                    "name": "obstacle1",
+                    "startx":     -400,
+                    "starty":     0,
+                    "dx": 0,
+                    "dy": 5,
+                    "speed":      0,
+                    "rotation":   0,
+                    "rotateStep": 1,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 115,
+                            "srcy": 400,
+                            "srcw": 50,
+                            "srch": 50
+                        }
+                    ],
+                    "value": 10
+                },
+
+                "obstacle2": {
+                    "name": "obstacle2",
+                    "startx":     -470,
+                    "starty":     0,
+                    "dx": 0,
+                    "dy": 3,
+                    "speed":      0,
+                    "rotation":   0,
+                    "rotateStep": 0,
+                    "animate":    false,
+                    "startFrame": 0,
+                    "frames": [
+                        {
+                            "srcx": 110,
+                            "srcy": 300,
+                            "srcw": 140,
+                            "srch": 150
+                        }
+                    ]
+                }
+            },
+
+            "waves": [
+                {
+                    "sprite": "enemy1",
+                    "class": 1,
+                    "at": 400
+                }, {
+                    "sprite": "enemy2",
+                    "class": 1,
+                    "at": 500
+                }
+            ]
+        }
+    ]
+}
