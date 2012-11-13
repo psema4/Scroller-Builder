@@ -104,16 +104,6 @@ window.addEventListener('load', function() {
         subscriptions.push(pubsub.subscribe(topic, handlers[topic]));
     });
 
-    // Export
-    $('#export').addEventListener('click', function() {
-        var data = game.getGameData()
-          , exportOutEl = $('#export-out')
-        ;
-
-        exportOutEl.value = JSON.stringify(data);
-        exportOutEl.style.visibility = 'visible';
-    });
-
     // Engine startup
     window.game = new GameEngine();
 
