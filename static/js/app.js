@@ -25,6 +25,26 @@ window.requestAnimationFrame = (function() {
     ;
 })();
 
+// transparently use vendor prefixes, returns property, correctly prefixed if found
+// based on getHiddenProp() -> http://www.html5rocks.com/en/tutorials/pagevisibility/intro/
+window.prefixNormalizer = function(property, hostObj) {
+    var prefixes = ['webkit','moz','ms','o'];
+    if (property in hostObj) {
+        return property;
+    }
+
+    // ucfirst the property name so we can prepend prefixes
+    property = property.charAt(0).toUpperCase() + property.slice(1);
+    for (var i=0; i < prefixes.length; i++) {
+        if ((prefixes[i] + property) in hostObj) {
+            return prefixes[i] + property;
+        }
+    }
+
+    // not supported
+    return null;
+}
+
 function $(sel) { return document.querySelector(sel); }
 function $$(sel) { return document.querySelectorAll(sel); }
 
@@ -195,6 +215,7 @@ window.addEventListener('load', function() {
 
 
     // get the list of available games and add it to the Game tab
+    // use a tree control here?
     var template = '<div class="__CLASS__"><a href="#" onclick="gameLoader(\'__FILENAME__\')">__FILE__</a></div>';
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/list', true);

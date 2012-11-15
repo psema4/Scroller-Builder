@@ -1,17 +1,38 @@
-/* audio.js
+/* *audio.js*
+*/
+
+/* Creates an AudioEngine
+ * @constructor
  *
- * audio engine
+ * @param {Object} opts AudioEngine options
+ * @returns {Object} an AudioEngine object
  */
 
 function AudioEngine(opts) {
     opts = opts || {};
 
     var ctx // webkitAudioContext
-      , logger = function() { console.log('AudioEngine', arguments); }
-    ;
+            // NOTE: investigate, used <audio> el's for the contest because Firefox still
+            //       using deprecated Audio API, not same as Chrome's
 
-    return {
-        loadMusic: function(id, url, cb) {
+        /* @method logger
+         * @private
+         * @param {Mixed} arguments One or more items to log to the js console
+         */
+      , logger = function() {
+            console.log('AudioEngine', arguments);
+        }
+
+        /* @method loadMusic
+         * @public
+         *
+         * Loads a music file.  Use the audio element API for playing, volume, etc
+         *
+         * @param {String} id DOM ID to assign after creating an audio element
+         * @param {String} url MP3 source URL
+         * @param {Function} cb Function to execute after successful load 
+         */
+      , loadMusic = function(id, url, cb) {
             var el = document.createElement('audio');
             el.id = id;
             el.className = 'music';
@@ -31,5 +52,9 @@ function AudioEngine(opts) {
             }
             $('#audio-container').appendChild(el);
         }
+    ;
+
+    return {
+        loadMusic: loadMusic
     };
 }

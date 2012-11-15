@@ -1,14 +1,41 @@
+/* *asset.js*
+*/
+
+/* @function
+ *
+ * Consume an event
+ *
+ * @param {Event} e Event to consume 
+ *
+ */
 function noopHandler (e) {
 	e.preventDefault();
 }
 
+/* @constructor
+ *
+ * Represts a file using the File API
+ *
+ * Options:
+ * - name
+ * - url
+ * - local
+ *
+ * @param {Object} opt Options
+ */
 function File (opt) {
 	opt || (opt = {});
 	this.name = opt.name;
 	this.url = opt.url;
 	this.local = opt.local;
 }
-
+/* @constructor
+ *
+ * Creates a FileDialog for File()'s
+ *
+ * @param {?} type Add description here
+ * @returns FileDialog A file dialog
+ */
 function FileDialog (type) {
 	var files = []
 	  , callback = null

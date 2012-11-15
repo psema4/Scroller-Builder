@@ -1,7 +1,7 @@
-/* user.js
+/* *user.js*
  *
  * class for managing the logged-in user
- */
+*/
 
 function User (opts) {
 	opts = opts || {};

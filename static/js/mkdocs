@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+JSDOG=`which jsdog`
+$JSDOG -n "ScrollerBuilder: Asset" -s asset.js > ../docs/asset.js.html
+$JSDOG -n "ScrollerBuilder: Audio" -s audio.js > ../docs/audio.js.html
+$JSDOG -n "ScrollerBuilder: GameEngine" -s game.js > ../docs/game.js.html
+$JSDOG -n "ScrollerBuilder: Sprite" -s sprite.js > ../docs/sprite.js.html
+$JSDOG -n "ScrollerBuilder: SpriteManager" -s spritemgr.js > ../docs/spritemgr.js.html
+$JSDOG -n "ScrollerBuilder: UI" -s ui.js > ../docs/ui.js.html
+$JSDOG -n "ScrollerBuilder: User" -s user.js > ../docs/user.js.html

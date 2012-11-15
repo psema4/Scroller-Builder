@@ -1,6 +1,19 @@
-/* game.js
+/* *game.js*
+*/
+
+/* @constructor
  *
- * game engine
+ * Creates a GameEngine
+ *
+ * Options:
+ * - TBD
+ *
+ * Exports:
+ * - AudioEngine as !.audio!
+ * - SpriteManager as !.sprites!
+ *
+ * @param {Object} opts GameEngine options
+ * @returns {Object} a GameEngine object
  */
 function GameEngine(opts) {
     opts = opts || {};
@@ -25,8 +38,21 @@ function GameEngine(opts) {
             state: 'loading'
         }
 
-      , logger = function() { console.log('GameEngine', arguments); }
+        /* @method logger
+         * @private
+         * @param {Mixed} arguments One or more items to log to the js console
+         */
+      , logger = function() {
+            console.log('GameEngine', arguments);
+        }
 
+        /* @method getCtx
+         * @public
+         *
+         * Provides direct access to the game's canvas
+         *
+         * @returns {Object} Graphics context for #game-screen canvas
+         */
       , getCtx = function() {
             // if we have a 2d context, return it
             if (ctx && typeof(ctx.fillStyle) != 'undefined') return ctx;
@@ -46,25 +72,57 @@ function GameEngine(opts) {
             return ctx;
         }
 
+        /* @method startTicking
+         * @public
+         *
+         * Starts the engine clock
+         *
+         */
       , startTicking = function() {
             if (isTicking) return;
             isTicking = true;
             update();
         }
 
+        /* @method stopTicking
+         * @public
+         *
+         * Stops the engine clock
+         *
+         */
       , stopTicking = function() {
             isTicking = false;
             window.webkitCancelAnimationFrame(prevFrame);
         }
 
+        /* @method checkTicking
+         * @public
+         *
+         * Determine if the engine clock is running or not
+         *
+         * @returns {Boolean} True if clock is running
+         */
       , checkTicking = function() {
             return isTicking;
         }
 
+        /* @method getTicks
+         * @public
+         *
+         * Gets the engine clock's current tick
+         *
+         */
       , getTicks = function() {
             return ticks;
         }
 
+        /* @method setTickDirection
+         * @public
+         *
+         * Toggles direction of engine clock
+         *
+         * @returns {Integer} 1 for normal time, -1 for reverse time
+         */
       , setTickDirection = function() {
             if (tickDirection > 0)
                 tickDirection = -1
@@ -75,7 +133,17 @@ function GameEngine(opts) {
             return tickDirection
         }
 
+        /* @method update
+         * @public
+         *
+         * Updates the game screen and increases the engine tick value by one.
+         *
+         * If the document is not visible (Page Visibility API), updates will not occur and the engine is effectively paused
+         */
       , update = function() {
+            var hidden = prefixNormalizer('hidden', document);
+            if (hidden && (document[hidden])) return; // document is not active (see also http://www.html5rocks.com/en/tutorials/pagevisibility/intro/)
+
             if (isTicking) prevFrame = requestAnimationFrame(update);
 
             ticks += 1 * tickDirection;
@@ -154,6 +222,11 @@ try {
             drawHud();
         }
 
+        /* @method drawHud
+         * @public
+         *
+         * Draws game information (eg. Lives, Score) to the game screen
+         */
       , drawHud = function() {
             if (engine.state != 'level-playing')   return;
             if (! (gameData && gameData.levels)) return;
@@ -174,6 +247,11 @@ try {
 
         }
 
+        /* @method clearScreen
+         * @public
+         *
+         * Clears the game screen
+         */
       , clearScreen = function() {
             var el = $('#game-screen');
 
@@ -184,6 +262,11 @@ try {
             ;
         }
 
+        /* @method drawStars
+         * @public
+         *
+         * Draws a collection of stars to the game screen, for simple space-like backgrounds
+         */
       , drawStars = function() {
             ctx.font = '24px Ariel, sans-serif';
             ctx.fillStyle = 'rgba(255,255,255,1.0)';
@@ -209,6 +292,11 @@ try {
             }
         }
 
+        /* @method drawTitles
+         * @public
+         *
+         * Draws the level title & description to the game screen
+         */
       , drawTitles = function() {
             if (engine.state != 'level-title')   return;
             if (! (gameData && gameData.levels)) return;
@@ -229,6 +317,15 @@ try {
 
             ctx.fillText(gameData.levels[level].description, centeredX, subtitleY);
         }
+
+        /* @method loadGame
+         * @public
+         * 
+         * Loads a game configuration file (json) via an AJAX call
+         * 
+         * @param {String} gameFilename The filename of the game to be loaded
+         * @param {Function} cb The function to execute after a successful load
+         */
 
         // FIXME: error handling
       , loadGame = function(gameFilename, cb) {
@@ -298,8 +395,22 @@ try {
             xhr.send();
         }
 
-      , getGameData = function() { return gameData; }
+        /* @method getGameData
+         * @public
+         *
+         * Get a copy of the currently running game specification (the json file, possibly modified)
+         *
+         * @returns {Object} The game
+         */
+      , getGameData = function() {
+            return gameData;
+        }
 
+        /* @method nextLevel
+         * @public
+         *
+         * Instructs the game engine to proceed to the next level in the game
+         */
       , nextLevel = function() {
             if (gameData && gameData.levels) {
                 stopTicking();
@@ -360,9 +471,41 @@ try {
             }
         }
 
-      , getLevelData = function() { return gameData.levels[level]; }
-      , getLevel = function() { return level; }
+        /* @method getLevelData
+         * @public
+         *
+         * Like getGameData, but only for the currently running level
+         *
+         * @returns {Object} Description of the current level
+         */
+      , getLevelData = function() {
+            return gameData.levels[level];
+        }
 
+        /* @method getLevel
+         * @public
+         *
+         * Gets the current level number
+         *
+         * @returns {Integer} 0-based index for game.getGameData().levels[]
+         */
+      , getLevel = function() {
+            return level;
+        }
+
+        /* @method addWaveToLevel
+         * @public
+         *
+         * Adds new sprite(s) to the currently running level. A "wave" is currently limited to 1 sprite/wave.
+         *
+         * If the y-coordinate is non-zero, it used as a time offset: based on the dx & dy variables of a sprite specification, the engine can calculate what tick
+         * a sprite should be created at, as well as what the x-coordinate value would be at that tick.
+         *
+         * @param {Integer} spriteIndex Sprite specification ID (refers to the 'sprites' entries in a a level definition)
+         * @param {Integer} x The horizontal coordinate to create the "wave" at
+         * @param {Integer} y the vertical coordinate to create the "wave" at
+         * @returns {Object} Description of the current level
+         */
       , addWaveToLevel = function(spriteIndex, x, y) {
             var wasTicking = checkTicking()
             if (wasTicking) stopTicking();
@@ -410,8 +553,24 @@ try {
                 update();
         }
 
-      , getEngineState = function() { return engine; }
+        /* @method getEngineState
+         * @public
+         *
+         * Get extended engine state information like what tick number the currently playing level started at (.levelStartTicks)
+         *
+         * @returns {Object} Engine state
+         */
+      , getEngineState = function() {
+            return engine;
+        }
 
+        /* @method playerEventStart
+         * @public
+         *
+         * Execute actions stored in player's sprite data based on keydown events
+         *
+         * @param {Event} evt Keyboard event
+         */
       , playerEventStart = function(evt) {
             var key = evt.keyCode
               , sprite = sprites.queue[0]
@@ -454,6 +613,13 @@ try {
             }
         }
 
+        /* @method playerEventStop
+         * @public
+         *
+         * Execute actions stored in player's sprite data based on keyup events
+         *
+         * @param {Event} evt Keyboard event
+         */
       , playerEventStop = function(evt) {
             var key = evt.keyCode
               , sprite = sprites.queue[0]
@@ -495,6 +661,11 @@ try {
             
         }
 
+        /* @method saveGame
+         * @public
+         * 
+         * Saves a game configuration file (json) to the server, via an AJAX call
+         */
       , saveGame = function() {
             var data = 'data=' + JSON.stringify(game.getGameData())
               , saveURL = '/save'
@@ -515,6 +686,46 @@ try {
             }
 
             xhr.send(encodeURI(data));
+        }
+
+        /* @method fullScreen
+         * @public
+         *
+         * Make the game canvas use the whole screen
+         *
+         * [red[NOTE:] !Must! be called from a user-initiated event (such as a mouse event, button click, etc)
+         */
+
+        //FIXME: #game-screen is currently hardcoded to 640x480 in several places.  Need to clear this up to make best use of fullscreen mode (browser just centers canvas atm)
+        //       see http://jlongster.com/2011/11/21/canvas.html for more on fullscreen canvas
+      , fullScreen = function() {
+            // http://davidwalsh.name/more-html5-apis
+            var launchFullScreen = function(el) {
+                if (el.requestFullScreen) {
+                    el.requestFullScreen();
+                } else if (el.mozRequestFullScreen) {
+                    el.mozRequestFullScreen();
+                } else if (el.webkitRequestFullScreen) {
+                    el.webkitRequestFullScreen();
+                }
+            };
+
+            launchFullScreen($('#game-screen'));
+        }
+
+        /* @method cancelFullScreen
+         * @public
+         *
+         * Break out of fullscreen mode
+         */
+      , cancelFullScreen = function() {
+            if(document.cancelFullScreen) {
+                document.cancelFullScreen();
+            } else if(document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if(document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            }
         }
     ;
 
@@ -570,6 +781,8 @@ try {
       , playerEventStop: playerEventStop
       , addWaveToLevel: addWaveToLevel
       , saveGame: saveGame
+      , fullScreen: fullScreen
+      , cancelFullScreen: cancelFullScreen
 
         // objects
       , audio: audio

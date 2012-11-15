@@ -1,9 +1,10 @@
-/* ui.js
+/* *ui.js*
  *
  * basic dynamic content (will probably later break this into seperate modules if it gets too large)
- */
+*/
 
- ;(function () {
+;
+(function () {
  	// Helper functions; rewrite depending on browser support
 
  	// Add class to element
